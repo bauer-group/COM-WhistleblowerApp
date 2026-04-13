@@ -1,0 +1,92 @@
+{
+  "title": "Sicheres Postfach",
+  "case_number_label": "Fallnummer",
+  "logout": "Abmelden",
+  "login": {
+    "title": "Postfach-Login",
+    "subtitle": "Geben Sie Ihre Fallnummer und Passphrase ein, um auf Ihr sicheres Postfach zuzugreifen.",
+    "case_number": "Fallnummer",
+    "case_number_hint": "16 Zeichen, z.B. ABCD1234EFGH5678",
+    "passphrase": "Passphrase oder Passwort",
+    "passphrase_hint": "Die 6-Wort-Passphrase oder Ihr selbst gewähltes Passwort",
+    "logging_in": "Anmeldung...",
+    "submit": "Anmelden",
+    "error": "Fallnummer oder Passphrase ungültig. Bitte überprüfen Sie Ihre Eingaben.",
+    "magic_link_text": "E-Mail-Adresse bei der Meldung angegeben?",
+    "magic_link_action": "Per E-Mail-Link anmelden",
+    "back_home": "Zurück zur Startseite"
+  },
+  "messages": {
+    "aria_label": "Nachrichtenverlauf",
+    "loading": "Nachrichten werden geladen...",
+    "error": "Nachrichten konnten nicht geladen werden. Die Sitzung ist möglicherweise abgelaufen.",
+    "relogin": "Erneut anmelden",
+    "empty": "Noch keine Nachrichten. Senden Sie eine Nachricht oder warten Sie auf eine Rückmeldung."
+  },
+  "send": {
+    "message_label": "Nachricht eingeben",
+    "placeholder": "Nachricht schreiben...",
+    "attach_files": "Dateien anhängen",
+    "submit": "Nachricht senden",
+    "hint": "Enter zum Senden, Shift+Enter für Zeilenumbruch",
+    "error": "Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+  },
+  "error": {
+    "no_session_title": "Keine aktive Sitzung",
+    "no_session_text": "Bitte melden Sie sich erneut an, um auf Ihr Postfach zuzugreifen.",
+    "go_to_login": "Zum Login"
+  },
+  "message": {
+    "aria_label": "Nachricht von {{sender}} um {{time}}",
+    "unread": "Ungelesen",
+    "download_attachment": "{{name}} herunterladen"
+  },
+  "magic_link": {
+    "title": "Login per E-Mail-Link",
+    "subtitle": "Geben Sie Ihre Fallnummer und die E-Mail-Adresse ein, die Sie bei der Meldung angegeben haben.",
+    "case_number": "Fallnummer",
+    "email": "E-Mail-Adresse",
+    "email_hint": "Die E-Mail-Adresse, die Sie bei der Meldung angegeben haben.",
+    "sending": "Link wird gesendet...",
+    "submit": "Login-Link anfordern",
+    "success_title": "E-Mail versendet",
+    "success_text": "Falls die angegebene E-Mail-Adresse mit einer Meldung verknüpft ist, erhalten Sie in Kürze einen Login-Link. Bitte prüfen Sie auch Ihren Spam-Ordner.",
+    "success_expiry": "Der Link ist 15 Minuten gültig.",
+    "back_to_login": "Zurück zum Login",
+    "back_home": "Zur Startseite",
+    "use_passphrase": "Mit Passphrase anmelden"
+  },
+  "magic_link_verify": {
+    "no_token_title": "Kein Token vorhanden",
+    "no_token_text": "Bitte öffnen Sie den Link aus Ihrer E-Mail. Diese Seite kann nicht direkt aufgerufen werden.",
+    "request_new": "Neuen Link anfordern",
+    "verifying": "Link wird überprüft...",
+    "verifying_title": "Link wird überprüft",
+    "verifying_text": "Bitte warten Sie, während Ihr Login-Link überprüft wird...",
+    "error_title": "Link ungültig",
+    "error_text": "Der Link ist ungültig oder abgelaufen. Bitte fordern Sie einen neuen Link an.",
+    "error_generic": "Der Link ist ungültig oder abgelaufen.",
+    "success_title": "Erfolgreich verifiziert",
+    "success_text": "Sie werden zu Ihrem Postfach weitergeleitet...",
+    "use_passphrase": "Mit Passphrase anmelden",
+    "back_home": "Zur Startseite"
+  },
+  "mailbox": {
+    "sender": {
+      "reporter": "Ich",
+      "handler": "Team",
+      "system": "System"
+    },
+    "validation": {
+      "case_number_length": "Die Fallnummer muss genau 16 Zeichen lang sein.",
+      "passphrase_required": "Bitte geben Sie Ihre Passphrase oder Ihr Passwort ein.",
+      "message_required": "Bitte geben Sie eine Nachricht ein.",
+      "message_max": "Die Nachricht darf maximal 50.000 Zeichen lang sein."
+    }
+  },
+  "report": {
+    "validation": {
+      "email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+    }
+  }
+}

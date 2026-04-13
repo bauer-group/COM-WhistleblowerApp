@@ -1,0 +1,172 @@
+{
+  "home": {
+    "title": "Whistleblower System",
+    "subtitle": "Report concerns securely and confidentially",
+    "info_heading": "Information about the reporting system",
+    "info_text": "This reporting portal allows you to confidentially report misconduct. Your report will be handled in accordance with the German Whistleblower Protection Act (HinSchG) and the German Supply Chain Due Diligence Act (LkSG). You can report anonymously or by providing your identity. Your data is stored encrypted and only accessible to authorized personnel.",
+    "feature_anonymous": "Anonymous reporting available",
+    "feature_encrypted": "End-to-end encryption",
+    "feature_mailbox": "Secure mailbox for responses",
+    "channel_heading": "Select reporting channel",
+    "channel": {
+      "hinschg": {
+        "title": "Internal Reporting Channel (HinSchG)",
+        "description": "Report violations of applicable law within the organization. Protected under the Whistleblower Protection Act."
+      },
+      "lksg": {
+        "title": "Public Complaints Channel (LkSG)",
+        "description": "Report human rights violations or environmental misconduct in the supply chain. Publicly accessible under the Supply Chain Act."
+      }
+    },
+    "start_report": "Start report",
+    "mailbox_heading": "Already submitted a report?",
+    "mailbox_text": "Access your secure mailbox to read messages, check the status of your report, or add new information.",
+    "mailbox_login": "Go to mailbox",
+    "magic_link": "Login via email link"
+  },
+  "wizard": {
+    "title": "Create Report",
+    "channel_hinschg": "Internal Reporting Channel (HinSchG)",
+    "channel_hinschg_info": "Report violations of applicable law within the organization.",
+    "channel_lksg": "Public Complaints Channel (LkSG)",
+    "channel_lksg_info": "Report human rights violations or environmental misconduct in the supply chain.",
+    "lksg_fields": "LkSG-specific information",
+    "identity_section": "Identity (optional)",
+    "back": "Back",
+    "cancel": "Cancel",
+    "next": "Next",
+    "submitting": "Submitting...",
+    "submit": "Submit report",
+    "errors_present": "Please correct the highlighted fields."
+  },
+  "steps": {
+    "nav_label": "Progress",
+    "completed": "Completed",
+    "current": "Current step",
+    "upcoming": "Upcoming"
+  },
+  "report": {
+    "steps": {
+      "category": "Category",
+      "category_desc": "Select a category",
+      "details": "Details",
+      "details_desc": "Description & files",
+      "review": "Review",
+      "review_desc": "Review & submit"
+    },
+    "validation": {
+      "subject_required": "Please enter a subject.",
+      "subject_max": "The subject must not exceed 500 characters.",
+      "description_required": "Please enter a description.",
+      "description_max": "The description must not exceed 50,000 characters.",
+      "email_invalid": "Please enter a valid email address.",
+      "email_required": "Please enter your email address.",
+      "name_required": "Please enter your name.",
+      "password_min": "The password must be at least 10 characters long.",
+      "password_max": "The password must not exceed 128 characters.",
+      "country_code": "Please enter a valid 3-letter ISO country code.",
+      "country_required": "Please enter the country.",
+      "organization_required": "Please enter the affected organization.",
+      "lksg_category_required": "Please select a category."
+    }
+  },
+  "fields": {
+    "subject": "Subject",
+    "subject_placeholder": "Brief summary of the incident",
+    "description": "Description",
+    "description_placeholder": "Describe the incident in as much detail as possible...",
+    "category": "Category",
+    "category_placeholder": "-- Select category --",
+    "select_placeholder": "-- Please select --",
+    "country": "Country (ISO-3 Code)",
+    "country_hint": "3-letter ISO country code (e.g., DEU, CHN, BRA)",
+    "organization": "Affected organization",
+    "supply_chain_tier": "Supply chain tier",
+    "reporter_relationship": "Relationship to the organization",
+    "is_anonymous": "I want to report anonymously",
+    "reporter_name": "Name",
+    "reporter_email": "Email",
+    "reporter_phone": "Phone",
+    "password": "Custom password (optional)",
+    "password_hint": "Min. 10 characters. If left empty, a secure passphrase will be generated.",
+    "attachments": "Attach files"
+  },
+  "supply_chain": {
+    "own_operations": "Own business operations",
+    "direct_supplier": "Direct supplier",
+    "indirect_supplier": "Indirect supplier",
+    "unknown": "Unknown"
+  },
+  "relationship": {
+    "employee": "Employee",
+    "supplier": "Supplier",
+    "contractor": "Contractor",
+    "community_member": "Community member",
+    "ngo": "NGO / Civil society",
+    "other": "Other"
+  },
+  "categories": {
+    "lksg": {
+      "child_labor": "Child labor",
+      "forced_labor": "Forced labor",
+      "discrimination": "Discrimination",
+      "freedom_of_association": "Freedom of association",
+      "working_conditions": "Working conditions",
+      "fair_wages": "Fair wages",
+      "environmental_damage": "Environmental damage",
+      "land_rights": "Land rights",
+      "security_forces": "Security forces",
+      "other_human_rights": "Other human rights",
+      "other_environmental": "Other environmental"
+    }
+  },
+  "review": {
+    "heading": "Summary of your report",
+    "channel": "Channel",
+    "anonymity": "Anonymity",
+    "anonymous": "Anonymous",
+    "not_anonymous": "Not anonymous",
+    "warning": "Please review all information carefully. After submission, you will receive access credentials that you must keep safe. Without these credentials, you will not be able to access your mailbox."
+  },
+  "upload": {
+    "drag_or_click": "Drag files here or click to select",
+    "drop_here": "Drop files here",
+    "constraints": "Max. {{maxSize}} per file, max. {{maxCount}} files",
+    "file_list": "Selected files",
+    "error_max_files": "Maximum of {{max}} files allowed.",
+    "error_file_size": "\"{{name}}\" exceeds the maximum file size of {{max}}.",
+    "remove_file": "Remove {{name}}",
+    "file_count": "{{count}} of {{max}} files selected"
+  },
+  "captcha": {
+    "label": "Bot protection",
+    "loading": "Loading captcha...",
+    "load_error": "Captcha could not be loaded.",
+    "retry": "Try again"
+  },
+  "submit": {
+    "error_generic": "An error occurred. Please try again."
+  },
+  "success": {
+    "title": "Report submitted successfully",
+    "subtitle": "Your report has been securely transmitted and will be processed promptly.",
+    "no_data_title": "No report data available",
+    "no_data_text": "This page can only be accessed after submitting a report.",
+    "go_home": "Go to home page",
+    "warning_title": "Important: Save your credentials!",
+    "warning_text": "Please note or copy the following access credentials now. Without these credentials, you will no longer be able to access your secure mailbox. There is no way to recover lost credentials.",
+    "case_number_label": "Case number",
+    "copy_case_number": "Copy case number",
+    "passphrase_label": "Passphrase",
+    "copy_passphrase": "Copy passphrase",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "password_label": "Password",
+    "password_note": "You have chosen your own password. Use it together with the case number to access your mailbox.",
+    "next_steps_title": "Next steps",
+    "step_1": "Store your credentials in a safe place.",
+    "step_2": "Check your mailbox regularly for responses.",
+    "step_3": "You will receive an acknowledgment of receipt within 7 days.",
+    "go_to_mailbox": "Go to mailbox"
+  }
+}

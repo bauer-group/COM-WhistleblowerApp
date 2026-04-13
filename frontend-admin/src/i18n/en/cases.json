@@ -1,0 +1,239 @@
+{
+  "list": {
+    "title": "Cases",
+    "subtitle": "Manage all reports and complaints",
+    "search_label": "Search cases",
+    "search_placeholder": "Full-text search in cases...",
+    "filter": {
+      "status": "Status",
+      "priority": "Priority",
+      "channel": "Channel",
+      "date_from": "From",
+      "date_to": "To",
+      "overdue_only": "Overdue only",
+      "all": "All",
+      "reset": "Reset"
+    },
+    "error": {
+      "title": "Error loading cases",
+      "message": "The case list could not be loaded. Please try again later."
+    }
+  },
+  "detail": {
+    "back": "Back to overview",
+    "back_to_list": "Back to case list",
+    "case_number": "Case number",
+    "case_details": "Case Details",
+    "request_identity": "Request identity",
+    "loading": "Loading case details…",
+    "description_section": "Description",
+    "no_files": "No files for this case.",
+    "tabs": {
+      "messages": "Messages",
+      "notes": "Notes",
+      "files": "Files",
+      "audit": "Audit Trail"
+    },
+    "metadata": {
+      "status": "Status",
+      "priority": "Priority",
+      "channel": "Channel",
+      "category": "Category",
+      "language": "Language",
+      "anonymous": "Anonymous",
+      "assigned_to": "Assigned to",
+      "created_at": "Created at",
+      "updated_at": "Updated at",
+      "confirmation_deadline": "Confirmation deadline",
+      "feedback_deadline": "Feedback deadline",
+      "description": "Description",
+      "related_cases": "Related cases"
+    },
+    "lksg": {
+      "title": "LkSG Data",
+      "organization": "Organization",
+      "country": "Country",
+      "supply_chain_tier": "Supply chain tier",
+      "lksg_category": "LkSG Category"
+    },
+    "deadlines": {
+      "title": "Deadlines",
+      "confirmation": "Confirmation of receipt",
+      "feedback": "Feedback",
+      "retention_until": "Retention until",
+      "completed_on": "Completed on",
+      "overdue": "overdue"
+    },
+    "deadline": {
+      "overdue": "Overdue",
+      "approaching": "Due soon",
+      "completed": "Completed",
+      "not_started": "Pending"
+    },
+    "reporter": {
+      "title": "Whistleblower",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "relationship": "Relationship"
+    },
+    "messages": {
+      "reply_label": "Reply to whistleblower",
+      "compose_placeholder": "Compose message… (visible in anonymous mailbox)",
+      "keyboard_hint": "Ctrl+Enter to send",
+      "sending": "Sending…",
+      "send": "Send message",
+      "empty": "No messages yet."
+    },
+    "notes": {
+      "title": "Internal Note",
+      "not_visible": "— Not visible to the whistleblower",
+      "compose_label": "Compose internal note",
+      "compose_placeholder": "Compose internal note...",
+      "default_placeholder": "Compose internal note… (visible to handlers only)",
+      "keyboard_hint": "Ctrl+Enter to send",
+      "save_aria": "Save internal note",
+      "saving": "Saving…",
+      "send": "Save note",
+      "empty": "No internal notes yet.",
+      "internal_badge": "Internal"
+    },
+    "files": {
+      "empty": "No files available.",
+      "download": "Download"
+    },
+    "audit": {
+      "empty": "No audit trail available."
+    },
+    "error": {
+      "title": "Error loading case",
+      "message": "The case could not be loaded. Please try again later.",
+      "back_link": "← Back to case list"
+    },
+    "not_found": {
+      "title": "Case not found",
+      "message": "The requested case does not exist."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of all reports and performance metrics",
+    "view_all_cases": "View all cases",
+    "channel_hinschg": "HinSchG (internal)",
+    "channel_lksg": "LkSG (public)",
+    "kpi": {
+      "total_cases": "Total Cases",
+      "open_cases": "Open Cases",
+      "overdue_cases": "Overdue Cases",
+      "avg_resolution": "Avg. Resolution Time"
+    },
+    "charts": {
+      "status_distribution": "Distribution by Status",
+      "channel_distribution": "Distribution by Channel"
+    },
+    "recent_cases": "Recent Cases",
+    "error": {
+      "title": "Error loading dashboard",
+      "message": "Dashboard data could not be loaded."
+    }
+  },
+  "disclosure": {
+    "title": "Identity Disclosure",
+    "history": "Previous Requests",
+    "new_request": "New Disclosure Request",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "expired": "Expired"
+    },
+    "request": {
+      "reason_label": "Reason for identity disclosure *",
+      "reason_hint": "Explain why access to the whistleblower's identity is required for handling this case. This reason will be documented in the audit trail.",
+      "reason_placeholder": "Enter reason (minimum 10 characters)…",
+      "min_chars": "minimum 10 characters",
+      "submitting": "Requesting…",
+      "submit": "Request disclosure"
+    },
+    "approval": {
+      "details": "Request Details",
+      "reason": "Reason",
+      "requested_at": "Requested on",
+      "decision_reason_label": "Decision reason (optional)",
+      "decision_reason_placeholder": "Optional reason for your decision…",
+      "approve": "Approve",
+      "reject": "Reject",
+      "decision_label": "Decision:"
+    },
+    "reveal": {
+      "title": "Disclosed Identity",
+      "note": "This information was disclosed under the four-eyes principle. Access has been logged.",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "confirm_warning": "Are you sure? Access will be logged and cannot be undone.",
+      "revealing": "Revealing…",
+      "reveal_now": "Reveal identity now",
+      "reveal_button": "Reveal identity"
+    },
+    "not_anonymous": {
+      "title": "This case is not anonymous.",
+      "message": "The whistleblower's identity data is directly available in the case details. A separate disclosure request is not required."
+    },
+    "four_eyes": {
+      "title": "Four-Eyes Principle",
+      "description": "Disclosure of the whistleblower's identity requires approval from a designated custodian. All access is documented in the audit trail."
+    },
+    "pending": {
+      "title": "Request Pending",
+      "message": "Your disclosure request is awaiting approval from the custodian."
+    }
+  },
+  "workflow": {
+    "title": "Case Status",
+    "updating": "Updating…",
+    "change_status": "Change Status",
+    "select_status": "Select status",
+    "progress_label": "Case status progress",
+    "eingegangen_desc": "Report has been received",
+    "in_pruefung_desc": "Initial assessment and jurisdiction review",
+    "in_bearbeitung_desc": "Active investigation and fact-finding",
+    "rueckmeldung_desc": "Result communicated to the whistleblower",
+    "abgeschlossen_desc": "Case has been concluded"
+  },
+  "timeline": {
+    "filter_label": "Timeline filter",
+    "empty": "No timeline entries yet."
+  },
+  "audit_actions": {
+    "report_created": "Report created",
+    "status_changed": "Status changed",
+    "priority_changed": "Priority changed",
+    "assigned": "Assigned",
+    "unassigned": "Assignment removed",
+    "message_sent": "Message sent",
+    "note_created": "Internal note created",
+    "attachment_uploaded": "File uploaded",
+    "disclosure_requested": "Identity disclosure requested",
+    "disclosure_approved": "Identity disclosure approved",
+    "disclosure_rejected": "Identity disclosure rejected",
+    "identity_revealed": "Identity revealed",
+    "confirmation_sent": "Confirmation of receipt sent",
+    "feedback_sent": "Feedback sent",
+    "case_reopened": "Case reopened"
+  },
+  "audit": {
+    "system_event": "System event",
+    "assigned_to": "Assigned to:"
+  },
+  "sender": {
+    "reporter": "Whistleblower",
+    "handler": "Handler",
+    "system": "System",
+    "unknown": "Unknown"
+  },
+  "message": {
+    "unread": "Unread",
+    "label": "Message"
+  }
+}

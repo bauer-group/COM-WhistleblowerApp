@@ -1,0 +1,69 @@
+# Development overrides – NOT for production use.
+# Applied automatically by `docker compose up`.
+services:
+  # ──────────────────────────────────────────────
+  # Reverse Proxy – Use dev Caddyfile for Vite ports
+  # ──────────────────────────────────────────────
+  reverse-proxy:
+    volumes:
+      - ./Caddyfile.dev:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+  # ──────────────────────────────────────────────
+  # API – hot-reload via uvicorn --reload
+  # ──────────────────────────────────────────────
+  api:
+    build:
+      target: development
+    volumes:
+      - ./backend:/app
+    environment:
+      UVICORN_RELOAD: "true"
+      LOG_LEVEL: "debug"
+
+  # ──────────────────────────────────────────────
+  # Reporter Frontend – Vite dev server
+  # ──────────────────────────────────────────────
+  reporter-frontend:
+    build:
+      target: development
+    volumes:
+      - ./frontend-reporter:/app
+      - /app/node_modules
+    expose:
+      - "5173"
+
+  # ──────────────────────────────────────────────
+  # Admin Frontend – Vite dev server
+  # ──────────────────────────────────────────────
+  admin-frontend:
+    build:
+      target: development
+    volumes:
+      - ./frontend-admin:/app
+      - /app/node_modules
+    expose:
+      - "5174"
+
+  # ──────────────────────────────────────────────
+  # PostgreSQL – expose to host for local tooling
+  # ──────────────────────────────────────────────
+  db:
+    ports:
+      - "5432:5432"
+
+  # ──────────────────────────────────────────────
+  # Redis – expose to host for local tooling
+  # ──────────────────────────────────────────────
+  redis:
+    ports:
+      - "6379:6379"
+
+  # ──────────────────────────────────────────────
+  # MinIO – expose API + Console to host
+  # ──────────────────────────────────────────────
+  minio:
+    ports:
+      - "9000:9000"
+      - "9001:9001"

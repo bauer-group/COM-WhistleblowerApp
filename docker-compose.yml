@@ -1,0 +1,172 @@
+services:
+  # ──────────────────────────────────────────────
+  # Reverse Proxy – Caddy 2
+  # ──────────────────────────────────────────────
+  reverse-proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "${CADDY_HTTP_PORT:-80}:80"
+      - "${CADDY_HTTPS_PORT:-443}:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api:
+        condition: service_started
+      reporter-frontend:
+        condition: service_started
+      admin-frontend:
+        condition: service_started
+    networks:
+      - frontend
+      - backend
+
+  # ──────────────────────────────────────────────
+  # Reporter Frontend – React 19 / Vite / Nginx
+  # ──────────────────────────────────────────────
+  reporter-frontend:
+    build:
+      context: ./frontend-reporter
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - frontend
+
+  # ──────────────────────────────────────────────
+  # Admin Frontend – React 19 / Vite / Nginx
+  # ──────────────────────────────────────────────
+  admin-frontend:
+    build:
+      context: ./frontend-admin
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - frontend
+
+  # ──────────────────────────────────────────────
+  # API – Python 3.14 / FastAPI
+  # ──────────────────────────────────────────────
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "8000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://${DB_APP_USER:-app_user}:${DB_APP_PASSWORD}@db:5432/${DB_NAME:-hinweisgebersystem}"
+      DATABASE_ADMIN_URL: "postgresql+asyncpg://${DB_ADMIN_USER:-postgres}:${DB_ADMIN_PASSWORD}@db:5432/${DB_NAME:-hinweisgebersystem}"
+      REDIS_URL: "redis://redis:6379/0"
+      S3_ENDPOINT: "minio:9000"
+      S3_ACCESS_KEY: "${MINIO_ROOT_USER:-minioadmin}"
+      S3_SECRET_KEY: "${MINIO_ROOT_PASSWORD:-minioadmin}"
+      S3_BUCKET: "${S3_BUCKET:-attachments}"
+      PGP_KEYRING_PATH: /var/lib/api/.gnupg
+    volumes:
+      - pgp_keyring:/var/lib/api/.gnupg
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    networks:
+      - backend
+
+  # ──────────────────────────────────────────────
+  # Database – PostgreSQL 18 with pgcrypto
+  # ──────────────────────────────────────────────
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_DB: "${DB_NAME:-hinweisgebersystem}"
+      POSTGRES_USER: "${DB_ADMIN_USER:-postgres}"
+      POSTGRES_PASSWORD: "${DB_ADMIN_PASSWORD}"
+      # Create the non-superuser application role on first start
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db-users.sh:/docker-entrypoint-initdb.d/01-init-db-users.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_ADMIN_USER:-postgres} -d ${DB_NAME:-hinweisgebersystem}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - backend
+
+  # ──────────────────────────────────────────────
+  # Cache – Redis 7
+  # ──────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    expose:
+      - "6379"
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - backend
+
+  # ──────────────────────────────────────────────
+  # Object Storage – MinIO (S3-compatible)
+  # ──────────────────────────────────────────────
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    expose:
+      - "9000"
+    environment:
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER:-minioadmin}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:-minioadmin}"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - backend
+
+# ──────────────────────────────────────────────
+# Volumes
+# ──────────────────────────────────────────────
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+  caddy_data:
+  caddy_config:
+  pgp_keyring:
+
+# ──────────────────────────────────────────────
+# Networks
+# ──────────────────────────────────────────────
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

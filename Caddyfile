@@ -1,0 +1,166 @@
+# ============================================================
+# Hinweisgebersystem – Caddy Reverse Proxy Configuration
+# ============================================================
+# Development: path-based routing on localhost (self-signed TLS)
+# Production:  adapt to subdomain-based routing
+#              (e.g., hinweis.example.com / admin.example.com)
+# ============================================================
+#
+# Routing (development):
+#   https://localhost/           -> reporter-frontend:80
+#   https://localhost/admin/     -> admin-frontend:80  (prefix stripped)
+#   https://localhost/api/       -> api:8000
+#   https://localhost/api/docs   -> api:8000  (Swagger UI)
+#
+# Rate Limiting:
+#   Primary rate limiting is enforced by the backend via Redis
+#   (backend/app/middleware/rate_limiter.py). For edge-level rate
+#   limiting, build a custom Caddy image with caddy-ratelimit:
+#     xcaddy build --with github.com/mholt/caddy-ratelimit
+#   Then uncomment the rate_limit directives below.
+# ============================================================
+
+{
+	# Development: use Caddy's internal CA for self-signed certs.
+	# Production:  remove this to enable automatic ACME (Let's Encrypt).
+	local_certs
+
+	# Admin endpoint (disabled in production)
+	admin off
+}
+
+# ──────────────────────────────────────────────
+# Localhost – Path-Based Routing (Development)
+# ──────────────────────────────────────────────
+localhost {
+	# ── TLS ──────────────────────────────────────
+	# Internal CA for development (auto self-signed).
+	# Production: remove this line; Caddy will auto-provision via ACME.
+	tls internal
+
+	# ── Compression ──────────────────────────────
+	encode zstd gzip
+
+	# ── Security Headers (all responses) ─────────
+	header {
+		# HSTS – enforce HTTPS for 2 years
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		# Prevent clickjacking
+		X-Frame-Options "DENY"
+		# Prevent MIME-type sniffing
+		X-Content-Type-Options "nosniff"
+		# Referrer policy – send origin only on cross-origin
+		Referrer-Policy "strict-origin-when-cross-origin"
+		# Disable browser features not needed
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+		# Content Security Policy
+		# - hCaptcha requires script/frame/connect exceptions
+		# - 'unsafe-inline' for styles (Tailwind CSS runtime)
+		Content-Security-Policy "default-src 'self'; script-src 'self' https://js.hcaptcha.com https://newassets.hcaptcha.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://api.hcaptcha.com; frame-src https://newassets.hcaptcha.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+		# Remove server header to reduce fingerprinting
+		-Server
+		# Prevent embedding in other sites
+		X-Permitted-Cross-Domain-Policies "none"
+	}
+
+	# ── CORS (API preflight) ────────────────────
+	# In development (path-based routing), the frontends are same-origin
+	# so CORS is not strictly required. These headers support the
+	# production subdomain layout and API consumers.
+	@api_preflight {
+		path /api/*
+		method OPTIONS
+	}
+	handle @api_preflight {
+		header {
+			Access-Control-Allow-Origin "{header.Origin}"
+			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+			Access-Control-Allow-Headers "Content-Type, Authorization, X-Tenant-ID, X-Request-ID"
+			Access-Control-Allow-Credentials "true"
+			Access-Control-Max-Age "86400"
+		}
+		respond 204
+	}
+
+	# ── Rate Limiting (requires caddy-ratelimit module) ──
+	# Uncomment after building Caddy with the rate_limit plugin.
+	# Protects public report submission and auth endpoints.
+	#
+	# rate_limit {
+	#     zone report_submit {
+	#         key    {remote_host}
+	#         events 5
+	#         window 1m
+	#     }
+	#     zone auth_endpoint {
+	#         key    {remote_host}
+	#         events 10
+	#         window 1m
+	#     }
+	# }
+
+	# ── API Backend ──────────────────────────────
+	handle /api/* {
+		# CORS headers for non-preflight API responses
+		@cors_request header Origin *
+		header @cors_request {
+			Access-Control-Allow-Origin "{header.Origin}"
+			Access-Control-Allow-Credentials "true"
+			Access-Control-Expose-Headers "Content-Disposition, X-Request-ID"
+		}
+
+		# Rate limit zones (uncomment with caddy-ratelimit):
+		# rate_limit report_submit {
+		#     match {
+		#         path /api/v1/reports
+		#         method POST
+		#     }
+		# }
+		# rate_limit auth_endpoint {
+		#     match {
+		#         path /api/v1/auth/*
+		#         method POST
+		#     }
+		# }
+
+		reverse_proxy api:8000 {
+			# Pass real client IP to the backend
+			header_up X-Real-IP {remote_host}
+			header_up X-Forwarded-For {remote_host}
+			header_up X-Forwarded-Proto {scheme}
+
+			# Health check
+			health_uri /api/v1/health
+			health_interval 30s
+			health_timeout 5s
+		}
+	}
+
+	# ── Admin Frontend ───────────────────────────
+	# Redirect bare /admin to /admin/ for consistent routing
+	@admin_bare path /admin
+	redir @admin_bare /admin/ permanent
+
+	# Strip /admin prefix before proxying to admin-frontend.
+	# The admin frontend is built with vite base: '/admin/' so
+	# asset references in HTML point to /admin/assets/... which
+	# Caddy strips to /assets/... before proxying.
+	handle_path /admin/* {
+		reverse_proxy admin-frontend:80
+	}
+
+	# ── Reporter Frontend (catch-all) ────────────
+	# All remaining paths go to the reporter SPA.
+	handle {
+		reverse_proxy reporter-frontend:80
+	}
+
+	# ── Access Logging ───────────────────────────
+	log {
+		output stdout
+		format json {
+			time_format iso8601
+		}
+		level INFO
+	}
+}

@@ -1,0 +1,285 @@
+{
+  "users": {
+    "title": "Benutzerverwaltung",
+    "subtitle": "Benutzerkonten verwalten und Rollen zuweisen",
+    "search_placeholder": "Benutzer suchen (Name, E-Mail)...",
+    "create": "Benutzer erstellen",
+    "edit": "Benutzer bearbeiten",
+    "table": {
+      "name": "Name",
+      "email": "E-Mail",
+      "role": "Rolle",
+      "status": "Status",
+      "custodian": "Vertrauensperson",
+      "last_login": "Letzter Login",
+      "created_at": "Erstellt am"
+    },
+    "form": {
+      "email": "E-Mail-Adresse",
+      "email_placeholder": "benutzer@organisation.de",
+      "display_name": "Anzeigename",
+      "display_name_placeholder": "Max Mustermann",
+      "oidc_subject": "OIDC Subject (Sub-Claim)",
+      "oidc_subject_placeholder": "Azure AD Object-ID",
+      "role": "Rolle",
+      "role_placeholder": "Rolle auswählen",
+      "is_custodian": "Als Vertrauensperson benennen",
+      "is_active": "Konto aktiv"
+    },
+    "filter": {
+      "role": "Rolle",
+      "status": "Status",
+      "custodian": "Vertrauensperson",
+      "all_roles": "Alle Rollen",
+      "all_statuses": "Alle Status",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "custodian_only": "Nur Vertrauenspersonen"
+    },
+    "deactivate_confirm": "Möchten Sie den Benutzer \"{{name}}\" wirklich deaktivieren?",
+    "activate_confirm": "Möchten Sie den Benutzer \"{{name}}\" wieder aktivieren?",
+    "created_success": "Benutzer erfolgreich erstellt.",
+    "updated_success": "Benutzer erfolgreich aktualisiert.",
+    "error": {
+      "load": "Benutzer konnten nicht geladen werden.",
+      "create": "Benutzer konnte nicht erstellt werden.",
+      "update": "Benutzer konnte nicht aktualisiert werden."
+    },
+    "never": "Nie"
+  },
+  "tenants": {
+    "title": "Mandantenverwaltung",
+    "subtitle": "Organisationen und deren Konfiguration verwalten",
+    "search_placeholder": "Mandant suchen (Name, Slug)...",
+    "create": "Mandant erstellen",
+    "edit": "Mandant bearbeiten",
+    "table": {
+      "name": "Name",
+      "slug": "Slug",
+      "status": "Status",
+      "languages": "Sprachen",
+      "created_at": "Erstellt am"
+    },
+    "form": {
+      "name": "Organisationsname",
+      "name_placeholder": "Musterorganisation GmbH",
+      "slug": "URL-Slug",
+      "slug_placeholder": "muster-org",
+      "is_active": "Mandant aktiv"
+    },
+    "config": {
+      "title": "Konfiguration",
+      "branding": "Branding",
+      "branding_description": "Logo, Farben und visuelle Identität",
+      "logo_url": "Logo-URL",
+      "primary_color": "Primärfarbe",
+      "accent_color": "Akzentfarbe",
+      "smtp": "SMTP-Konfiguration",
+      "smtp_description": "E-Mail-Server für Benachrichtigungen",
+      "smtp_host": "SMTP-Host",
+      "smtp_port": "SMTP-Port",
+      "smtp_user": "SMTP-Benutzer",
+      "smtp_password": "SMTP-Passwort",
+      "smtp_from": "Absenderadresse",
+      "smtp_tls": "TLS verwenden",
+      "languages": "Sprachen",
+      "default_language": "Standardsprache",
+      "retention": "Aufbewahrungsfristen",
+      "retention_hinschg": "HinSchG (Jahre)",
+      "retention_lksg": "LkSG (Jahre)"
+    },
+    "created_success": "Mandant erfolgreich erstellt.",
+    "updated_success": "Mandant erfolgreich aktualisiert.",
+    "error": {
+      "load": "Mandanten konnten nicht geladen werden.",
+      "create": "Mandant konnte nicht erstellt werden.",
+      "update": "Mandant konnte nicht aktualisiert werden."
+    }
+  },
+  "categories": {
+    "title": "Kategorieverwaltung",
+    "subtitle": "Meldekategorien und Übersetzungen verwalten",
+    "language_select": "Sprache auswählen",
+    "create": "Kategorie erstellen",
+    "edit": "Kategorie bearbeiten",
+    "table": {
+      "key": "Schlüssel",
+      "label": "Bezeichnung",
+      "description": "Beschreibung",
+      "sort_order": "Reihenfolge",
+      "status": "Status"
+    },
+    "form": {
+      "category_key": "Kategorieschlüssel",
+      "category_key_placeholder": "z.B. korruption, betrug",
+      "label": "Bezeichnung",
+      "label_placeholder": "Anzeigename der Kategorie",
+      "description": "Beschreibung",
+      "description_placeholder": "Optionale Beschreibung für den Hinweisgeber",
+      "sort_order": "Sortierreihenfolge",
+      "is_active": "Kategorie aktiv"
+    },
+    "created_success": "Kategorie erfolgreich erstellt.",
+    "updated_success": "Kategorie erfolgreich aktualisiert.",
+    "error": {
+      "load": "Kategorien konnten nicht geladen werden.",
+      "create": "Kategorie konnte nicht erstellt werden.",
+      "update": "Kategorie konnte nicht aktualisiert werden."
+    }
+  },
+  "audit_log": {
+    "title": "Prüfprotokoll",
+    "subtitle": "Alle Systemaktivitäten nachvollziehen",
+    "search_placeholder": "Protokoll durchsuchen...",
+    "export_csv": "CSV exportieren",
+    "table": {
+      "timestamp": "Zeitstempel",
+      "action": "Aktion",
+      "actor": "Akteur",
+      "actor_type": "Akteurtyp",
+      "resource_type": "Ressourcentyp",
+      "resource_id": "Ressourcen-ID",
+      "details": "Details",
+      "ip_address": "IP-Adresse"
+    },
+    "filter": {
+      "action": "Aktion",
+      "actor_type": "Akteurtyp",
+      "resource_type": "Ressourcentyp",
+      "date_from": "Von",
+      "date_to": "Bis",
+      "all_actions": "Alle Aktionen",
+      "all_actor_types": "Alle Akteurtypen",
+      "all_resource_types": "Alle Ressourcentypen"
+    },
+    "actions": {
+      "case.created": "Fall erstellt",
+      "case.status_changed": "Status geändert",
+      "case.assigned": "Fall zugewiesen",
+      "case.priority_changed": "Priorität geändert",
+      "case.deleted": "Fall gelöscht",
+      "message.sent": "Nachricht gesendet",
+      "message.read": "Nachricht gelesen",
+      "attachment.uploaded": "Anhang hochgeladen",
+      "attachment.downloaded": "Anhang heruntergeladen",
+      "identity.disclosure_requested": "Identitätsoffenlegung angefordert",
+      "identity.disclosure_approved": "Identitätsoffenlegung genehmigt",
+      "identity.disclosure_rejected": "Identitätsoffenlegung abgelehnt",
+      "identity.disclosed": "Identität offengelegt",
+      "user.created": "Benutzer erstellt",
+      "user.updated": "Benutzer aktualisiert",
+      "user.deactivated": "Benutzer deaktiviert",
+      "user.login": "Benutzer angemeldet",
+      "user.logout": "Benutzer abgemeldet",
+      "tenant.created": "Mandant erstellt",
+      "tenant.updated": "Mandant aktualisiert",
+      "tenant.deactivated": "Mandant deaktiviert",
+      "category.created": "Kategorie erstellt",
+      "category.updated": "Kategorie aktualisiert",
+      "category.deleted": "Kategorie gelöscht"
+    },
+    "actor_types": {
+      "user": "Benutzer",
+      "reporter": "Hinweisgeber",
+      "system": "System"
+    },
+    "resource_types": {
+      "report": "Meldung",
+      "user": "Benutzer",
+      "tenant": "Mandant",
+      "message": "Nachricht",
+      "attachment": "Anhang",
+      "disclosure": "Offenlegung",
+      "category": "Kategorie"
+    },
+    "empty": "Keine Protokolleinträge gefunden.",
+    "error": {
+      "load": "Prüfprotokoll konnte nicht geladen werden.",
+      "export": "Export fehlgeschlagen."
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Mandantenspezifische Konfiguration verwalten",
+    "loading": "Laden...",
+    "save": "Speichern",
+    "saving": "Wird gespeichert...",
+    "lang_de": "Deutsch",
+    "lang_en": "Englisch",
+    "tabs": {
+      "branding": "Branding",
+      "smtp": "E-Mail (SMTP)",
+      "languages": "Sprachen",
+      "channels": "Kanäle",
+      "retention": "Aufbewahrung",
+      "email_templates": "E-Mail-Vorlagen"
+    },
+    "branding": {
+      "title": "Branding-Einstellungen",
+      "description": "Passen Sie das Erscheinungsbild des Meldeportals an.",
+      "logo_url": "Logo-URL",
+      "logo_url_placeholder": "https://...",
+      "primary_color": "Primärfarbe",
+      "accent_color": "Akzentfarbe"
+    },
+    "smtp": {
+      "title": "SMTP-Konfiguration",
+      "description": "Konfigurieren Sie den E-Mail-Server für Benachrichtigungen.",
+      "host": "Server",
+      "host_placeholder": "smtp.example.com",
+      "port": "Port",
+      "user": "Benutzername",
+      "user_placeholder": "smtp-user",
+      "password": "Passwort",
+      "password_placeholder": "••••••••",
+      "from_address": "Absenderadresse",
+      "from_address_placeholder": "noreply@example.com",
+      "use_tls": "TLS verwenden",
+      "not_configured": "SMTP ist noch nicht konfiguriert."
+    },
+    "languages": {
+      "title": "Spracheinstellungen",
+      "description": "Verfügbare Sprachen und Standardsprache konfigurieren.",
+      "available": "Verfügbare Sprachen",
+      "default": "Standardsprache",
+      "add": "Sprache hinzufügen"
+    },
+    "channels": {
+      "title": "Kanalkonfiguration",
+      "description": "Aktivieren oder deaktivieren Sie die Meldekanäle.",
+      "hinschg_enabled": "HinSchG-Kanal (intern)",
+      "hinschg_description": "Interner Meldekanal gemäß Hinweisgeberschutzgesetz",
+      "lksg_enabled": "LkSG-Kanal (öffentlich)",
+      "lksg_description": "Öffentlicher Beschwerdekanal gemäß Lieferkettensorgfaltspflichtengesetz"
+    },
+    "retention": {
+      "title": "Aufbewahrungsfristen",
+      "description": "Gesetzliche Aufbewahrungsfristen für Meldungen konfigurieren.",
+      "hinschg_years": "HinSchG-Aufbewahrungsfrist (Jahre)",
+      "hinschg_hint": "Gesetzliche Mindestfrist: 3 Jahre nach Abschluss des Verfahrens",
+      "lksg_years": "LkSG-Aufbewahrungsfrist (Jahre)",
+      "lksg_hint": "Empfohlene Aufbewahrungsfrist: 5 Jahre"
+    },
+    "email_templates": {
+      "title": "E-Mail-Vorlagen",
+      "description": "Vorlagen für automatische Benachrichtigungen bearbeiten.",
+      "language": "Sprache",
+      "subject_label": "Betreff",
+      "body_label": "Inhalt",
+      "confirmation_legend": "Eingangsbestätigung",
+      "confirmation_subject": "Bestätigung – Betreff",
+      "confirmation_body": "Bestätigung – Inhalt",
+      "feedback_legend": "Rückmeldung",
+      "feedback_subject": "Rückmeldung – Betreff",
+      "feedback_body": "Rückmeldung – Inhalt",
+      "magic_link_legend": "Magic Link",
+      "magic_link_subject": "Magic Link – Betreff",
+      "magic_link_body": "Magic Link – Inhalt"
+    },
+    "saved_success": "Einstellungen erfolgreich gespeichert.",
+    "error": {
+      "load": "Einstellungen konnten nicht geladen werden.",
+      "save": "Einstellungen konnten nicht gespeichert werden."
+    }
+  }
+}

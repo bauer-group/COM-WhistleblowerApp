@@ -1,0 +1,172 @@
+{
+  "home": {
+    "title": "Hinweisgebersystem",
+    "subtitle": "Sicher und vertraulich Hinweise melden",
+    "info_heading": "Informationen zum Meldesystem",
+    "info_text": "Dieses Meldeportal ermöglicht es Ihnen, vertraulich auf Missstände hinzuweisen. Ihre Meldung wird nach den Vorgaben des Hinweisgeberschutzgesetzes (HinSchG) und des Lieferkettensorgfaltspflichtengesetzes (LkSG) behandelt. Sie können anonym oder unter Angabe Ihrer Identität melden. Ihre Daten werden verschlüsselt gespeichert und nur von autorisierten Personen eingesehen.",
+    "feature_anonymous": "Anonyme Meldung möglich",
+    "feature_encrypted": "Ende-zu-Ende-Verschlüsselung",
+    "feature_mailbox": "Sicheres Postfach für Rückmeldungen",
+    "channel_heading": "Meldekanal auswählen",
+    "channel": {
+      "hinschg": {
+        "title": "Interner Meldekanal (HinSchG)",
+        "description": "Melden Sie Verstöße gegen geltendes Recht innerhalb des Unternehmens. Geschützt durch das Hinweisgeberschutzgesetz."
+      },
+      "lksg": {
+        "title": "Öffentlicher Beschwerdekanal (LkSG)",
+        "description": "Melden Sie Menschenrechtsverletzungen oder Umweltverstöße in der Lieferkette. Öffentlich zugänglich gemäß LkSG."
+      }
+    },
+    "start_report": "Meldung starten",
+    "mailbox_heading": "Bereits eine Meldung abgegeben?",
+    "mailbox_text": "Greifen Sie auf Ihr sicheres Postfach zu, um Nachrichten zu lesen, den Status Ihrer Meldung zu prüfen oder neue Informationen hinzuzufügen.",
+    "mailbox_login": "Zum Postfach",
+    "magic_link": "Login per E-Mail-Link"
+  },
+  "wizard": {
+    "title": "Meldung erstellen",
+    "channel_hinschg": "Interner Meldekanal (HinSchG)",
+    "channel_hinschg_info": "Melden Sie Verstöße gegen geltendes Recht innerhalb des Unternehmens.",
+    "channel_lksg": "Öffentlicher Beschwerdekanal (LkSG)",
+    "channel_lksg_info": "Melden Sie Menschenrechtsverletzungen oder Umweltverstöße in der Lieferkette.",
+    "lksg_fields": "LkSG-spezifische Angaben",
+    "identity_section": "Identität (optional)",
+    "back": "Zurück",
+    "cancel": "Abbrechen",
+    "next": "Weiter",
+    "submitting": "Wird gesendet...",
+    "submit": "Meldung absenden",
+    "errors_present": "Bitte korrigieren Sie die markierten Felder."
+  },
+  "steps": {
+    "nav_label": "Fortschritt",
+    "completed": "Abgeschlossen",
+    "current": "Aktueller Schritt",
+    "upcoming": "Ausstehend"
+  },
+  "report": {
+    "steps": {
+      "category": "Kategorie",
+      "category_desc": "Wählen Sie eine Kategorie",
+      "details": "Details",
+      "details_desc": "Beschreibung & Dateien",
+      "review": "Überprüfung",
+      "review_desc": "Prüfen & Absenden"
+    },
+    "validation": {
+      "subject_required": "Bitte geben Sie einen Betreff ein.",
+      "subject_max": "Der Betreff darf maximal 500 Zeichen lang sein.",
+      "description_required": "Bitte geben Sie eine Beschreibung ein.",
+      "description_max": "Die Beschreibung darf maximal 50.000 Zeichen lang sein.",
+      "email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "email_required": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+      "name_required": "Bitte geben Sie Ihren Namen ein.",
+      "password_min": "Das Passwort muss mindestens 10 Zeichen lang sein.",
+      "password_max": "Das Passwort darf maximal 128 Zeichen lang sein.",
+      "country_code": "Bitte geben Sie einen gültigen 3-stelligen ISO-Ländercode ein.",
+      "country_required": "Bitte geben Sie das Land an.",
+      "organization_required": "Bitte geben Sie das betroffene Unternehmen an.",
+      "lksg_category_required": "Bitte wählen Sie eine Kategorie aus."
+    }
+  },
+  "fields": {
+    "subject": "Betreff",
+    "subject_placeholder": "Kurze Zusammenfassung des Vorfalls",
+    "description": "Beschreibung",
+    "description_placeholder": "Beschreiben Sie den Vorfall so detailliert wie möglich...",
+    "category": "Kategorie",
+    "category_placeholder": "-- Kategorie auswählen --",
+    "select_placeholder": "-- Bitte auswählen --",
+    "country": "Land (ISO-3 Code)",
+    "country_hint": "3-stelliger ISO-Ländercode (z.B. DEU, CHN, BRA)",
+    "organization": "Betroffenes Unternehmen",
+    "supply_chain_tier": "Lieferkettenstufe",
+    "reporter_relationship": "Beziehung zum Unternehmen",
+    "is_anonymous": "Ich möchte anonym melden",
+    "reporter_name": "Name",
+    "reporter_email": "E-Mail",
+    "reporter_phone": "Telefon",
+    "password": "Eigenes Passwort (optional)",
+    "password_hint": "Mind. 10 Zeichen. Wenn leer, wird ein sicherer Passphrase generiert.",
+    "attachments": "Dateien anhängen"
+  },
+  "supply_chain": {
+    "own_operations": "Eigener Geschäftsbereich",
+    "direct_supplier": "Unmittelbarer Zulieferer",
+    "indirect_supplier": "Mittelbarer Zulieferer",
+    "unknown": "Unbekannt"
+  },
+  "relationship": {
+    "employee": "Mitarbeiter/in",
+    "supplier": "Lieferant",
+    "contractor": "Auftragnehmer",
+    "community_member": "Anwohner/in",
+    "ngo": "NGO / Zivilgesellschaft",
+    "other": "Sonstiges"
+  },
+  "categories": {
+    "lksg": {
+      "child_labor": "Kinderarbeit",
+      "forced_labor": "Zwangsarbeit",
+      "discrimination": "Diskriminierung",
+      "freedom_of_association": "Vereinigungsfreiheit",
+      "working_conditions": "Arbeitsbedingungen",
+      "fair_wages": "Faire Löhne",
+      "environmental_damage": "Umweltschäden",
+      "land_rights": "Landrechte",
+      "security_forces": "Sicherheitskräfte",
+      "other_human_rights": "Sonstige Menschenrechte",
+      "other_environmental": "Sonstige Umweltverstöße"
+    }
+  },
+  "review": {
+    "heading": "Zusammenfassung Ihrer Meldung",
+    "channel": "Kanal",
+    "anonymity": "Anonymität",
+    "anonymous": "Anonym",
+    "not_anonymous": "Nicht anonym",
+    "warning": "Bitte überprüfen Sie alle Angaben sorgfältig. Nach dem Absenden erhalten Sie Zugangsdaten, die Sie sicher aufbewahren müssen. Ohne diese Daten können Sie nicht auf Ihr Postfach zugreifen."
+  },
+  "upload": {
+    "drag_or_click": "Dateien hierher ziehen oder klicken",
+    "drop_here": "Dateien hier ablegen",
+    "constraints": "Max. {{maxSize}} pro Datei, max. {{maxCount}} Dateien",
+    "file_list": "Ausgewählte Dateien",
+    "error_max_files": "Maximal {{max}} Dateien erlaubt.",
+    "error_file_size": "\"{{name}}\" überschreitet die maximale Dateigröße von {{max}}.",
+    "remove_file": "{{name}} entfernen",
+    "file_count": "{{count}} von {{max}} Dateien ausgewählt"
+  },
+  "captcha": {
+    "label": "Bot-Schutz",
+    "loading": "Captcha wird geladen...",
+    "load_error": "Captcha konnte nicht geladen werden.",
+    "retry": "Erneut versuchen"
+  },
+  "submit": {
+    "error_generic": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "success": {
+    "title": "Meldung erfolgreich eingereicht",
+    "subtitle": "Ihre Meldung wurde sicher übermittelt und wird zeitnah bearbeitet.",
+    "no_data_title": "Keine Meldungsdaten vorhanden",
+    "no_data_text": "Diese Seite kann nur nach dem Absenden einer Meldung aufgerufen werden.",
+    "go_home": "Zur Startseite",
+    "warning_title": "Wichtig: Zugangsdaten sichern!",
+    "warning_text": "Notieren oder kopieren Sie die folgenden Zugangsdaten jetzt. Ohne diese Daten können Sie nicht mehr auf Ihr sicheres Postfach zugreifen. Es gibt keine Möglichkeit, verlorene Zugangsdaten wiederherzustellen.",
+    "case_number_label": "Fallnummer",
+    "copy_case_number": "Fallnummer kopieren",
+    "passphrase_label": "Passphrase",
+    "copy_passphrase": "Passphrase kopieren",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "password_label": "Passwort",
+    "password_note": "Sie haben ein eigenes Passwort gewählt. Verwenden Sie dieses zusammen mit der Fallnummer, um auf Ihr Postfach zuzugreifen.",
+    "next_steps_title": "Nächste Schritte",
+    "step_1": "Speichern Sie Ihre Zugangsdaten an einem sicheren Ort.",
+    "step_2": "Prüfen Sie regelmäßig Ihr Postfach auf Rückmeldungen.",
+    "step_3": "Sie erhalten innerhalb von 7 Tagen eine Eingangsbestätigung.",
+    "go_to_mailbox": "Zum Postfach"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "status": {
+    "eingegangen": "Eingegangen",
+    "in_pruefung": "In Prüfung",
+    "in_bearbeitung": "In Bearbeitung",
+    "rueckmeldung": "Rückmeldung",
+    "abgeschlossen": "Abgeschlossen"
+  },
+  "language": {
+    "selector_label": "Sprache auswählen"
+  },
+  "nav": {
+    "home": "Startseite",
+    "report": "Meldung erstellen",
+    "mailbox": "Postfach",
+    "back": "Zurück",
+    "skip_to_content": "Zum Inhalt springen"
+  },
+  "buttons": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "submit": "Absenden",
+    "loading": "Wird geladen...",
+    "retry": "Erneut versuchen",
+    "copy": "Kopieren",
+    "copied": "Kopiert!"
+  },
+  "errors": {
+    "generic": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "network": "Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.",
+    "not_found": "Die angeforderte Ressource wurde nicht gefunden.",
+    "unauthorized": "Sie sind nicht berechtigt, diese Aktion durchzuführen.",
+    "session_expired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+    "validation": "Bitte überprüfen Sie Ihre Eingaben."
+  },
+  "date": {
+    "format_short": "dd.MM.yyyy",
+    "format_long": "dd. MMMM yyyy",
+    "format_time": "HH:mm",
+    "format_datetime": "dd.MM.yyyy HH:mm",
+    "today": "Heute",
+    "yesterday": "Gestern"
+  },
+  "loading": "Laden...",
+  "aria": {
+    "loading": "Laden...",
+    "close_dialog": "Dialog schließen"
+  }
+}

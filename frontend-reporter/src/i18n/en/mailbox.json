@@ -1,0 +1,92 @@
+{
+  "title": "Secure Mailbox",
+  "case_number_label": "Case number",
+  "logout": "Log out",
+  "login": {
+    "title": "Mailbox Login",
+    "subtitle": "Enter your case number and passphrase to access your secure mailbox.",
+    "case_number": "Case number",
+    "case_number_hint": "16 characters, e.g., ABCD1234EFGH5678",
+    "passphrase": "Passphrase or password",
+    "passphrase_hint": "The 6-word passphrase or your self-chosen password",
+    "logging_in": "Logging in...",
+    "submit": "Log in",
+    "error": "Case number or passphrase is invalid. Please check your input.",
+    "magic_link_text": "Provided an email address with your report?",
+    "magic_link_action": "Log in via email link",
+    "back_home": "Back to home page"
+  },
+  "messages": {
+    "aria_label": "Message history",
+    "loading": "Loading messages...",
+    "error": "Messages could not be loaded. Your session may have expired.",
+    "relogin": "Log in again",
+    "empty": "No messages yet. Send a message or wait for a response."
+  },
+  "send": {
+    "message_label": "Enter message",
+    "placeholder": "Write a message...",
+    "attach_files": "Attach files",
+    "submit": "Send message",
+    "hint": "Enter to send, Shift+Enter for line break",
+    "error": "Message could not be sent. Please try again."
+  },
+  "error": {
+    "no_session_title": "No active session",
+    "no_session_text": "Please log in again to access your mailbox.",
+    "go_to_login": "Go to login"
+  },
+  "message": {
+    "aria_label": "Message from {{sender}} at {{time}}",
+    "unread": "Unread",
+    "download_attachment": "Download {{name}}"
+  },
+  "magic_link": {
+    "title": "Login via Email Link",
+    "subtitle": "Enter your case number and the email address you provided when submitting your report.",
+    "case_number": "Case number",
+    "email": "Email address",
+    "email_hint": "The email address you provided when submitting your report.",
+    "sending": "Sending link...",
+    "submit": "Request login link",
+    "success_title": "Email sent",
+    "success_text": "If the provided email address is linked to a report, you will receive a login link shortly. Please also check your spam folder.",
+    "success_expiry": "The link is valid for 15 minutes.",
+    "back_to_login": "Back to login",
+    "back_home": "Go to home page",
+    "use_passphrase": "Log in with passphrase"
+  },
+  "magic_link_verify": {
+    "no_token_title": "No token provided",
+    "no_token_text": "Please open the link from your email. This page cannot be accessed directly.",
+    "request_new": "Request new link",
+    "verifying": "Verifying link...",
+    "verifying_title": "Verifying link",
+    "verifying_text": "Please wait while your login link is being verified...",
+    "error_title": "Link invalid",
+    "error_text": "The link is invalid or has expired. Please request a new link.",
+    "error_generic": "The link is invalid or has expired.",
+    "success_title": "Successfully verified",
+    "success_text": "You are being redirected to your mailbox...",
+    "use_passphrase": "Log in with passphrase",
+    "back_home": "Go to home page"
+  },
+  "mailbox": {
+    "sender": {
+      "reporter": "Me",
+      "handler": "Team",
+      "system": "System"
+    },
+    "validation": {
+      "case_number_length": "The case number must be exactly 16 characters long.",
+      "passphrase_required": "Please enter your passphrase or password.",
+      "message_required": "Please enter a message.",
+      "message_max": "The message must not exceed 50,000 characters."
+    }
+  },
+  "report": {
+    "validation": {
+      "email_invalid": "Please enter a valid email address."
+    }
+  }
+}

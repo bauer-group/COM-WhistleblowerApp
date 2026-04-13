@@ -1,0 +1,52 @@
+{
+  "status": {
+    "eingegangen": "Received",
+    "in_pruefung": "Under Review",
+    "in_bearbeitung": "In Progress",
+    "rueckmeldung": "Feedback",
+    "abgeschlossen": "Completed"
+  },
+  "language": {
+    "selector_label": "Select language"
+  },
+  "nav": {
+    "home": "Home",
+    "report": "Submit Report",
+    "mailbox": "Mailbox",
+    "back": "Back",
+    "skip_to_content": "Skip to content"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "errors": {
+    "generic": "An error occurred. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "not_found": "The requested resource was not found.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "session_expired": "Your session has expired. Please log in again.",
+    "validation": "Please check your input."
+  },
+  "date": {
+    "format_short": "MM/dd/yyyy",
+    "format_long": "MMMM dd, yyyy",
+    "format_time": "HH:mm",
+    "format_datetime": "MM/dd/yyyy HH:mm",
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "loading": "Loading...",
+  "aria": {
+    "loading": "Loading...",
+    "close_dialog": "Close dialog"
+  }
+}

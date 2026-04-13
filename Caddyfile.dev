@@ -1,0 +1,82 @@
+# ============================================================
+# Hinweisgebersystem – Caddy Development Configuration
+# ============================================================
+# Routes to Vite dev servers (ports 5173/5174) instead of
+# Nginx (port 80). Used by docker-compose.override.yml.
+# ============================================================
+
+{
+	local_certs
+	admin off
+}
+
+localhost {
+	tls internal
+
+	encode zstd gzip
+
+	# ── Security Headers (relaxed for development) ───────
+	header {
+		Strict-Transport-Security "max-age=0"
+		X-Frame-Options "DENY"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	# ── CORS (API preflight) ────────────────────────────
+	@api_preflight {
+		path /api/*
+		method OPTIONS
+	}
+	handle @api_preflight {
+		header {
+			Access-Control-Allow-Origin "{header.Origin}"
+			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+			Access-Control-Allow-Headers "Content-Type, Authorization, X-Tenant-ID, X-Request-ID"
+			Access-Control-Allow-Credentials "true"
+			Access-Control-Max-Age "86400"
+		}
+		respond 204
+	}
+
+	# ── API Backend ──────────────────────────────────────
+	handle /api/* {
+		@cors_request header Origin *
+		header @cors_request {
+			Access-Control-Allow-Origin "{header.Origin}"
+			Access-Control-Allow-Credentials "true"
+			Access-Control-Expose-Headers "Content-Disposition, X-Request-ID"
+		}
+
+		reverse_proxy api:8000 {
+			header_up X-Real-IP {remote_host}
+			header_up X-Forwarded-For {remote_host}
+			header_up X-Forwarded-Proto {scheme}
+			health_uri /api/v1/health
+			health_interval 30s
+			health_timeout 5s
+		}
+	}
+
+	# ── Admin Frontend (Vite dev server on port 5174) ────
+	@admin_bare path /admin
+	redir @admin_bare /admin/ permanent
+
+	handle_path /admin/* {
+		reverse_proxy admin-frontend:5174
+	}
+
+	# ── Reporter Frontend (Vite dev server on port 5173) ─
+	handle {
+		reverse_proxy reporter-frontend:5173
+	}
+
+	log {
+		output stdout
+		format json {
+			time_format iso8601
+		}
+		level INFO
+	}
+}

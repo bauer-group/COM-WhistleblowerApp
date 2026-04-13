@@ -1,0 +1,109 @@
+{
+  "status": {
+    "eingegangen": "Received",
+    "in_pruefung": "Under Review",
+    "in_bearbeitung": "In Progress",
+    "rueckmeldung": "Feedback",
+    "abgeschlossen": "Completed"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "channel": {
+    "hinschg": "HinSchG",
+    "lksg": "LkSG"
+  },
+  "role": {
+    "system_admin": "System Administrator",
+    "tenant_admin": "Tenant Administrator",
+    "handler": "Handler",
+    "reviewer": "Reviewer",
+    "auditor": "Auditor"
+  },
+  "language": {
+    "selector_label": "Select language",
+    "de": "German",
+    "en": "English"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "cases": "Cases",
+    "users": "User Management",
+    "tenants": "Tenant Management",
+    "categories": "Categories",
+    "audit_log": "Audit Log",
+    "settings": "Settings",
+    "back": "Back",
+    "skip_to_content": "Skip to content"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "export": "Export",
+    "reset": "Reset",
+    "search": "Search",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "table": {
+    "no_results": "No results found.",
+    "loading": "Loading data...",
+    "show": "Show:",
+    "page": "Page",
+    "of": "of",
+    "entries": "entries",
+    "actions": "Actions"
+  },
+  "errors": {
+    "generic": "An error occurred. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "not_found": "The requested resource was not found.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "session_expired": "Your session has expired. Please log in again.",
+    "validation": "Please check your input.",
+    "conflict": "Conflict: The data has been modified. Please reload the page.",
+    "load_failed": "Loading failed. Please try again later."
+  },
+  "confirm": {
+    "delete": "Are you sure you want to delete this entry?",
+    "deactivate": "Are you sure you want to deactivate this entry?",
+    "unsaved_changes": "You have unsaved changes. Are you sure you want to leave?"
+  },
+  "date": {
+    "format_short": "MM/dd/yyyy",
+    "format_long": "MMMM dd, yyyy",
+    "format_time": "HH:mm",
+    "format_datetime": "MM/dd/yyyy HH:mm",
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "boolean": {
+    "yes": "Yes",
+    "no": "No",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "loading": "Loading...",
+  "aria": {
+    "loading": "Loading...",
+    "close_dialog": "Close dialog",
+    "sort_ascending": "Sort ascending",
+    "sort_descending": "Sort descending",
+    "open_menu": "Open menu",
+    "pagination": "Page navigation"
+  }
+}

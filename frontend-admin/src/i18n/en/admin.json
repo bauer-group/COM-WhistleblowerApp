@@ -1,0 +1,285 @@
+{
+  "users": {
+    "title": "User Management",
+    "subtitle": "Manage user accounts and assign roles",
+    "search_placeholder": "Search users (name, email)...",
+    "create": "Create User",
+    "edit": "Edit User",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "custodian": "Custodian",
+      "last_login": "Last Login",
+      "created_at": "Created at"
+    },
+    "form": {
+      "email": "Email Address",
+      "email_placeholder": "user@organization.com",
+      "display_name": "Display Name",
+      "display_name_placeholder": "John Doe",
+      "oidc_subject": "OIDC Subject (Sub Claim)",
+      "oidc_subject_placeholder": "Azure AD Object ID",
+      "role": "Role",
+      "role_placeholder": "Select role",
+      "is_custodian": "Designate as custodian",
+      "is_active": "Account active"
+    },
+    "filter": {
+      "role": "Role",
+      "status": "Status",
+      "custodian": "Custodian",
+      "all_roles": "All Roles",
+      "all_statuses": "All Statuses",
+      "active": "Active",
+      "inactive": "Inactive",
+      "custodian_only": "Custodians only"
+    },
+    "deactivate_confirm": "Are you sure you want to deactivate user \"{{name}}\"?",
+    "activate_confirm": "Are you sure you want to reactivate user \"{{name}}\"?",
+    "created_success": "User created successfully.",
+    "updated_success": "User updated successfully.",
+    "error": {
+      "load": "Users could not be loaded.",
+      "create": "User could not be created.",
+      "update": "User could not be updated."
+    },
+    "never": "Never"
+  },
+  "tenants": {
+    "title": "Tenant Management",
+    "subtitle": "Manage organizations and their configuration",
+    "search_placeholder": "Search tenants (name, slug)...",
+    "create": "Create Tenant",
+    "edit": "Edit Tenant",
+    "table": {
+      "name": "Name",
+      "slug": "Slug",
+      "status": "Status",
+      "languages": "Languages",
+      "created_at": "Created at"
+    },
+    "form": {
+      "name": "Organization Name",
+      "name_placeholder": "Example Organization Inc.",
+      "slug": "URL Slug",
+      "slug_placeholder": "example-org",
+      "is_active": "Tenant active"
+    },
+    "config": {
+      "title": "Configuration",
+      "branding": "Branding",
+      "branding_description": "Logo, colors, and visual identity",
+      "logo_url": "Logo URL",
+      "primary_color": "Primary Color",
+      "accent_color": "Accent Color",
+      "smtp": "SMTP Configuration",
+      "smtp_description": "Email server for notifications",
+      "smtp_host": "SMTP Host",
+      "smtp_port": "SMTP Port",
+      "smtp_user": "SMTP User",
+      "smtp_password": "SMTP Password",
+      "smtp_from": "From Address",
+      "smtp_tls": "Use TLS",
+      "languages": "Languages",
+      "default_language": "Default Language",
+      "retention": "Retention Periods",
+      "retention_hinschg": "HinSchG (Years)",
+      "retention_lksg": "LkSG (Years)"
+    },
+    "created_success": "Tenant created successfully.",
+    "updated_success": "Tenant updated successfully.",
+    "error": {
+      "load": "Tenants could not be loaded.",
+      "create": "Tenant could not be created.",
+      "update": "Tenant could not be updated."
+    }
+  },
+  "categories": {
+    "title": "Category Management",
+    "subtitle": "Manage report categories and translations",
+    "language_select": "Select Language",
+    "create": "Create Category",
+    "edit": "Edit Category",
+    "table": {
+      "key": "Key",
+      "label": "Label",
+      "description": "Description",
+      "sort_order": "Sort Order",
+      "status": "Status"
+    },
+    "form": {
+      "category_key": "Category Key",
+      "category_key_placeholder": "e.g. corruption, fraud",
+      "label": "Label",
+      "label_placeholder": "Display name of the category",
+      "description": "Description",
+      "description_placeholder": "Optional description for the whistleblower",
+      "sort_order": "Sort Order",
+      "is_active": "Category active"
+    },
+    "created_success": "Category created successfully.",
+    "updated_success": "Category updated successfully.",
+    "error": {
+      "load": "Categories could not be loaded.",
+      "create": "Category could not be created.",
+      "update": "Category could not be updated."
+    }
+  },
+  "audit_log": {
+    "title": "Audit Log",
+    "subtitle": "Track all system activities",
+    "search_placeholder": "Search audit log...",
+    "export_csv": "Export CSV",
+    "table": {
+      "timestamp": "Timestamp",
+      "action": "Action",
+      "actor": "Actor",
+      "actor_type": "Actor Type",
+      "resource_type": "Resource Type",
+      "resource_id": "Resource ID",
+      "details": "Details",
+      "ip_address": "IP Address"
+    },
+    "filter": {
+      "action": "Action",
+      "actor_type": "Actor Type",
+      "resource_type": "Resource Type",
+      "date_from": "From",
+      "date_to": "To",
+      "all_actions": "All Actions",
+      "all_actor_types": "All Actor Types",
+      "all_resource_types": "All Resource Types"
+    },
+    "actions": {
+      "case.created": "Case created",
+      "case.status_changed": "Status changed",
+      "case.assigned": "Case assigned",
+      "case.priority_changed": "Priority changed",
+      "case.deleted": "Case deleted",
+      "message.sent": "Message sent",
+      "message.read": "Message read",
+      "attachment.uploaded": "Attachment uploaded",
+      "attachment.downloaded": "Attachment downloaded",
+      "identity.disclosure_requested": "Identity disclosure requested",
+      "identity.disclosure_approved": "Identity disclosure approved",
+      "identity.disclosure_rejected": "Identity disclosure rejected",
+      "identity.disclosed": "Identity disclosed",
+      "user.created": "User created",
+      "user.updated": "User updated",
+      "user.deactivated": "User deactivated",
+      "user.login": "User logged in",
+      "user.logout": "User logged out",
+      "tenant.created": "Tenant created",
+      "tenant.updated": "Tenant updated",
+      "tenant.deactivated": "Tenant deactivated",
+      "category.created": "Category created",
+      "category.updated": "Category updated",
+      "category.deleted": "Category deleted"
+    },
+    "actor_types": {
+      "user": "User",
+      "reporter": "Whistleblower",
+      "system": "System"
+    },
+    "resource_types": {
+      "report": "Report",
+      "user": "User",
+      "tenant": "Tenant",
+      "message": "Message",
+      "attachment": "Attachment",
+      "disclosure": "Disclosure",
+      "category": "Category"
+    },
+    "empty": "No audit log entries found.",
+    "error": {
+      "load": "Audit log could not be loaded.",
+      "export": "Export failed."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage tenant-specific configuration",
+    "loading": "Loading...",
+    "save": "Save",
+    "saving": "Saving...",
+    "lang_de": "German",
+    "lang_en": "English",
+    "tabs": {
+      "branding": "Branding",
+      "smtp": "Email (SMTP)",
+      "languages": "Languages",
+      "channels": "Channels",
+      "retention": "Retention",
+      "email_templates": "Email Templates"
+    },
+    "branding": {
+      "title": "Branding Settings",
+      "description": "Customize the appearance of the reporting portal.",
+      "logo_url": "Logo URL",
+      "logo_url_placeholder": "https://...",
+      "primary_color": "Primary Color",
+      "accent_color": "Accent Color"
+    },
+    "smtp": {
+      "title": "SMTP Configuration",
+      "description": "Configure the email server for notifications.",
+      "host": "Server",
+      "host_placeholder": "smtp.example.com",
+      "port": "Port",
+      "user": "Username",
+      "user_placeholder": "smtp-user",
+      "password": "Password",
+      "password_placeholder": "••••••••",
+      "from_address": "From Address",
+      "from_address_placeholder": "noreply@example.com",
+      "use_tls": "Use TLS",
+      "not_configured": "SMTP is not yet configured."
+    },
+    "languages": {
+      "title": "Language Settings",
+      "description": "Configure available languages and default language.",
+      "available": "Available Languages",
+      "default": "Default Language",
+      "add": "Add Language"
+    },
+    "channels": {
+      "title": "Channel Configuration",
+      "description": "Enable or disable reporting channels.",
+      "hinschg_enabled": "HinSchG Channel (internal)",
+      "hinschg_description": "Internal reporting channel per Whistleblower Protection Act",
+      "lksg_enabled": "LkSG Channel (public)",
+      "lksg_description": "Public complaint channel per Supply Chain Due Diligence Act"
+    },
+    "retention": {
+      "title": "Retention Periods",
+      "description": "Configure legal data retention periods for reports.",
+      "hinschg_years": "HinSchG Retention Period (Years)",
+      "hinschg_hint": "Statutory minimum: 3 years after case closure",
+      "lksg_years": "LkSG Retention Period (Years)",
+      "lksg_hint": "Recommended retention: 5 years"
+    },
+    "email_templates": {
+      "title": "Email Templates",
+      "description": "Edit templates for automated notifications.",
+      "language": "Language",
+      "subject_label": "Subject",
+      "body_label": "Body",
+      "confirmation_legend": "Confirmation",
+      "confirmation_subject": "Confirmation – Subject",
+      "confirmation_body": "Confirmation – Body",
+      "feedback_legend": "Feedback",
+      "feedback_subject": "Feedback – Subject",
+      "feedback_body": "Feedback – Body",
+      "magic_link_legend": "Magic Link",
+      "magic_link_subject": "Magic Link – Subject",
+      "magic_link_body": "Magic Link – Body"
+    },
+    "saved_success": "Settings saved successfully.",
+    "error": {
+      "load": "Settings could not be loaded.",
+      "save": "Settings could not be saved."
+    }
+  }
+}

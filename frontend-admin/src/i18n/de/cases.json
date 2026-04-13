@@ -1,0 +1,239 @@
+{
+  "list": {
+    "title": "Fälle",
+    "subtitle": "Alle Meldungen und Beschwerden verwalten",
+    "search_label": "Fälle durchsuchen",
+    "search_placeholder": "Volltextsuche in Fällen...",
+    "filter": {
+      "status": "Status",
+      "priority": "Priorität",
+      "channel": "Kanal",
+      "date_from": "Von",
+      "date_to": "Bis",
+      "overdue_only": "Nur überfällige",
+      "all": "Alle",
+      "reset": "Zurücksetzen"
+    },
+    "error": {
+      "title": "Fehler beim Laden der Fälle",
+      "message": "Die Fallliste konnte nicht geladen werden. Bitte versuchen Sie es später erneut."
+    }
+  },
+  "detail": {
+    "back": "Zurück zur Übersicht",
+    "back_to_list": "Zurück zur Fallliste",
+    "case_number": "Fallnummer",
+    "case_details": "Falldetails",
+    "request_identity": "Identität anfragen",
+    "loading": "Falldetails werden geladen…",
+    "description_section": "Beschreibung",
+    "no_files": "Keine Dateien zu diesem Fall.",
+    "tabs": {
+      "messages": "Nachrichten",
+      "notes": "Notizen",
+      "files": "Dateien",
+      "audit": "Protokoll"
+    },
+    "metadata": {
+      "status": "Status",
+      "priority": "Priorität",
+      "channel": "Kanal",
+      "category": "Kategorie",
+      "language": "Sprache",
+      "anonymous": "Anonym",
+      "assigned_to": "Zugewiesen an",
+      "created_at": "Erstellt am",
+      "updated_at": "Aktualisiert am",
+      "confirmation_deadline": "Bestätigungsfrist",
+      "feedback_deadline": "Rückmeldefrist",
+      "description": "Beschreibung",
+      "related_cases": "Verknüpfte Fälle"
+    },
+    "lksg": {
+      "title": "LkSG-Daten",
+      "organization": "Organisation",
+      "country": "Land",
+      "supply_chain_tier": "Lieferkettenstufe",
+      "lksg_category": "LkSG-Kategorie"
+    },
+    "deadlines": {
+      "title": "Fristen",
+      "confirmation": "Eingangsbestätigung",
+      "feedback": "Rückmeldung",
+      "retention_until": "Aufbewahrung bis",
+      "completed_on": "Erledigt am",
+      "overdue": "überfällig"
+    },
+    "deadline": {
+      "overdue": "Überfällig",
+      "approaching": "Bald fällig",
+      "completed": "Erledigt",
+      "not_started": "Ausstehend"
+    },
+    "reporter": {
+      "title": "Hinweisgeber",
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "relationship": "Beziehung"
+    },
+    "messages": {
+      "reply_label": "Antwort an Hinweisgeber",
+      "compose_placeholder": "Nachricht verfassen… (sichtbar im anonymen Postfach)",
+      "keyboard_hint": "Ctrl+Enter zum Absenden",
+      "sending": "Wird gesendet…",
+      "send": "Nachricht senden",
+      "empty": "Noch keine Nachrichten."
+    },
+    "notes": {
+      "title": "Interne Notiz",
+      "not_visible": "— Nicht sichtbar für den Hinweisgeber",
+      "compose_label": "Interne Notiz verfassen",
+      "compose_placeholder": "Interne Notiz verfassen...",
+      "default_placeholder": "Interne Notiz verfassen… (nur für Sachbearbeiter sichtbar)",
+      "keyboard_hint": "Ctrl+Enter zum Absenden",
+      "save_aria": "Interne Notiz speichern",
+      "saving": "Wird gespeichert…",
+      "send": "Notiz speichern",
+      "empty": "Noch keine internen Notizen.",
+      "internal_badge": "Intern"
+    },
+    "files": {
+      "empty": "Keine Dateien vorhanden.",
+      "download": "Herunterladen"
+    },
+    "audit": {
+      "empty": "Kein Prüfprotokoll vorhanden."
+    },
+    "error": {
+      "title": "Fehler beim Laden des Falls",
+      "message": "Der Fall konnte nicht geladen werden. Bitte versuchen Sie es später erneut.",
+      "back_link": "← Zurück zur Fallliste"
+    },
+    "not_found": {
+      "title": "Fall nicht gefunden",
+      "message": "Der angeforderte Fall existiert nicht."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Übersicht aller Meldungen und Leistungskennzahlen",
+    "view_all_cases": "Alle Fälle anzeigen",
+    "channel_hinschg": "HinSchG (intern)",
+    "channel_lksg": "LkSG (öffentlich)",
+    "kpi": {
+      "total_cases": "Fälle gesamt",
+      "open_cases": "Offene Fälle",
+      "overdue_cases": "Überfällige Fälle",
+      "avg_resolution": "Ø Bearbeitungszeit"
+    },
+    "charts": {
+      "status_distribution": "Verteilung nach Status",
+      "channel_distribution": "Verteilung nach Kanal"
+    },
+    "recent_cases": "Neueste Fälle",
+    "error": {
+      "title": "Fehler beim Laden des Dashboards",
+      "message": "Die Dashboard-Daten konnten nicht geladen werden."
+    }
+  },
+  "disclosure": {
+    "title": "Identitätsoffenlegung",
+    "history": "Bisherige Anfragen",
+    "new_request": "Neue Offenlegungsanfrage",
+    "status": {
+      "pending": "Ausstehend",
+      "approved": "Genehmigt",
+      "rejected": "Abgelehnt",
+      "expired": "Abgelaufen"
+    },
+    "request": {
+      "reason_label": "Begründung der Identitätsoffenlegung *",
+      "reason_hint": "Erläutern Sie, warum der Zugriff auf die Identität des Hinweisgebers für die Bearbeitung dieses Falls erforderlich ist. Diese Begründung wird im Audit-Protokoll dokumentiert.",
+      "reason_placeholder": "Begründung eingeben (mindestens 10 Zeichen)…",
+      "min_chars": "mindestens 10 Zeichen",
+      "submitting": "Wird angefragt…",
+      "submit": "Offenlegung anfragen"
+    },
+    "approval": {
+      "details": "Anfrage-Details",
+      "reason": "Begründung",
+      "requested_at": "Angefragt am",
+      "decision_reason_label": "Entscheidungsbegründung (optional)",
+      "decision_reason_placeholder": "Optionale Begründung für Ihre Entscheidung…",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen",
+      "decision_label": "Entscheidung:"
+    },
+    "reveal": {
+      "title": "Offengelegte Identität",
+      "note": "Diese Informationen wurden im Rahmen des Vier-Augen-Prinzips offengelegt. Der Zugriff wurde protokolliert.",
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "confirm_warning": "Sind Sie sicher? Der Zugriff wird protokolliert und ist nicht rückgängig zu machen.",
+      "revealing": "Wird offengelegt…",
+      "reveal_now": "Identität jetzt offenlegen",
+      "reveal_button": "Identität offenlegen"
+    },
+    "not_anonymous": {
+      "title": "Dieser Fall ist nicht anonym.",
+      "message": "Die Identitätsdaten des Hinweisgebers sind in den Falldetails direkt einsehbar. Eine gesonderte Offenlegungsanfrage ist nicht erforderlich."
+    },
+    "four_eyes": {
+      "title": "Vier-Augen-Prinzip",
+      "description": "Die Offenlegung der Hinweisgeber-Identität erfordert die Genehmigung durch einen Vertrauensperson (Custodian). Alle Zugriffe werden im Audit-Protokoll dokumentiert."
+    },
+    "pending": {
+      "title": "Anfrage ausstehend",
+      "message": "Ihre Offenlegungsanfrage wartet auf die Genehmigung durch die Vertrauensperson."
+    }
+  },
+  "workflow": {
+    "title": "Fallstatus",
+    "updating": "Wird aktualisiert…",
+    "change_status": "Status ändern",
+    "select_status": "Status auswählen",
+    "progress_label": "Fallstatus-Fortschritt",
+    "eingegangen_desc": "Meldung wurde empfangen",
+    "in_pruefung_desc": "Erstbewertung und Zuständigkeitsprüfung",
+    "in_bearbeitung_desc": "Aktive Untersuchung und Sachverhaltsklärung",
+    "rueckmeldung_desc": "Ergebnis wird dem Hinweisgeber mitgeteilt",
+    "abgeschlossen_desc": "Fall ist abschließend bearbeitet"
+  },
+  "timeline": {
+    "filter_label": "Timeline-Filter",
+    "empty": "Noch keine Einträge in der Timeline."
+  },
+  "audit_actions": {
+    "report_created": "Meldung erstellt",
+    "status_changed": "Status geändert",
+    "priority_changed": "Priorität geändert",
+    "assigned": "Zugewiesen",
+    "unassigned": "Zuweisung entfernt",
+    "message_sent": "Nachricht gesendet",
+    "note_created": "Interne Notiz erstellt",
+    "attachment_uploaded": "Datei hochgeladen",
+    "disclosure_requested": "Identitätsoffenlegung angefragt",
+    "disclosure_approved": "Identitätsoffenlegung genehmigt",
+    "disclosure_rejected": "Identitätsoffenlegung abgelehnt",
+    "identity_revealed": "Identität offengelegt",
+    "confirmation_sent": "Eingangsbestätigung gesendet",
+    "feedback_sent": "Rückmeldung gesendet",
+    "case_reopened": "Fall wiedereröffnet"
+  },
+  "audit": {
+    "system_event": "Systemereignis",
+    "assigned_to": "Zugewiesen an:"
+  },
+  "sender": {
+    "reporter": "Hinweisgeber",
+    "handler": "Sachbearbeiter",
+    "system": "System",
+    "unknown": "Unbekannt"
+  },
+  "message": {
+    "unread": "Ungelesen",
+    "label": "Nachricht"
+  }
+}

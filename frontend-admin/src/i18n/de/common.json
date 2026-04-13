@@ -1,0 +1,109 @@
+{
+  "status": {
+    "eingegangen": "Eingegangen",
+    "in_pruefung": "In Prüfung",
+    "in_bearbeitung": "In Bearbeitung",
+    "rueckmeldung": "Rückmeldung",
+    "abgeschlossen": "Abgeschlossen"
+  },
+  "priority": {
+    "low": "Niedrig",
+    "medium": "Mittel",
+    "high": "Hoch",
+    "critical": "Kritisch"
+  },
+  "channel": {
+    "hinschg": "HinSchG",
+    "lksg": "LkSG"
+  },
+  "role": {
+    "system_admin": "Systemadministrator",
+    "tenant_admin": "Mandantenadministrator",
+    "handler": "Bearbeiter",
+    "reviewer": "Prüfer",
+    "auditor": "Revisor"
+  },
+  "language": {
+    "selector_label": "Sprache auswählen",
+    "de": "Deutsch",
+    "en": "Englisch"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "cases": "Fälle",
+    "users": "Benutzerverwaltung",
+    "tenants": "Mandantenverwaltung",
+    "categories": "Kategorien",
+    "audit_log": "Prüfprotokoll",
+    "settings": "Einstellungen",
+    "back": "Zurück",
+    "skip_to_content": "Zum Inhalt springen"
+  },
+  "buttons": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "submit": "Absenden",
+    "create": "Erstellen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deactivate": "Deaktivieren",
+    "activate": "Aktivieren",
+    "export": "Exportieren",
+    "reset": "Zurücksetzen",
+    "search": "Suchen",
+    "loading": "Wird geladen...",
+    "retry": "Erneut versuchen",
+    "copy": "Kopieren",
+    "copied": "Kopiert!"
+  },
+  "table": {
+    "no_results": "Keine Ergebnisse gefunden.",
+    "loading": "Daten werden geladen...",
+    "show": "Anzeigen:",
+    "page": "Seite",
+    "of": "von",
+    "entries": "Einträge",
+    "actions": "Aktionen"
+  },
+  "errors": {
+    "generic": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "network": "Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.",
+    "not_found": "Die angeforderte Ressource wurde nicht gefunden.",
+    "unauthorized": "Sie sind nicht berechtigt, diese Aktion durchzuführen.",
+    "session_expired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+    "validation": "Bitte überprüfen Sie Ihre Eingaben.",
+    "conflict": "Konflikt: Die Daten wurden zwischenzeitlich geändert. Bitte laden Sie die Seite neu.",
+    "load_failed": "Laden fehlgeschlagen. Bitte versuchen Sie es später erneut."
+  },
+  "confirm": {
+    "delete": "Möchten Sie diesen Eintrag wirklich löschen?",
+    "deactivate": "Möchten Sie diesen Eintrag wirklich deaktivieren?",
+    "unsaved_changes": "Sie haben ungespeicherte Änderungen. Möchten Sie die Seite wirklich verlassen?"
+  },
+  "date": {
+    "format_short": "dd.MM.yyyy",
+    "format_long": "dd. MMMM yyyy",
+    "format_time": "HH:mm",
+    "format_datetime": "dd.MM.yyyy HH:mm",
+    "today": "Heute",
+    "yesterday": "Gestern"
+  },
+  "boolean": {
+    "yes": "Ja",
+    "no": "Nein",
+    "active": "Aktiv",
+    "inactive": "Inaktiv"
+  },
+  "loading": "Laden...",
+  "aria": {
+    "loading": "Laden...",
+    "close_dialog": "Dialog schließen",
+    "sort_ascending": "Aufsteigend sortieren",
+    "sort_descending": "Absteigend sortieren",
+    "open_menu": "Menü öffnen",
+    "pagination": "Seitennavigation"
+  }
+}

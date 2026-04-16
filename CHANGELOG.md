@@ -1,3 +1,9 @@
+## [0.5.3](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.2...v0.5.3) (2026-04-16)
+
+### 🐛 Bug Fixes
+
+* **branding:** neutralize button margin in row/col/flex layouts ([24f5797](https://github.com/bauer-group/COM-WhistleblowerApp/commit/24f57970968410a980d542172bbfb0d11afe9944)), closes [#FFCB94](https://github.com/bauer-group/COM-WhistleblowerApp/issues/FFCB94)
+
 ## [0.5.2](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.1...v0.5.2) (2026-04-16)
 
 ### 🐛 Bug Fixes

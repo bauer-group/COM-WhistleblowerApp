@@ -388,6 +388,31 @@ footer a:hover,
 }
 
 /* ───────────────────────────────────────────────────────────
+ * Landing-Page CTA: Whistleblower-Question + Report-Button
+ *
+ * Upstream-Struktur:
+ *   <div id="WhistleblowerSubmitBox" class="mt-4">
+ *     <span id="WhistleblowingQuestion">Are you aware ...</span>
+ *     <button id="WhistleblowingButton" class="btn btn-primary">Report a Concern</button>
+ *   </div>
+ *
+ * Der <span> ist inline → kein margin-bottom wirkt; Button klebt am Text.
+ * Flex-Column + gap gibt konsistenten Abstand UND zentriert beides sauber.
+ * ─────────────────────────────────────────────────────────── */
+#WhistleblowerSubmitBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+#WhistleblowingQuestion {
+  display: block;
+  max-width: 72ch;
+  text-align: center;
+}
+
+/* ───────────────────────────────────────────────────────────
  * Tor-Hinweis-Banner entschärfen
  *
  * Upstream-CSS setzt: #PrivacyBadge { background-color: #1d1f24; color: #fff }

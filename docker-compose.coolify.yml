@@ -4,15 +4,18 @@
 # ═══════════════════════════════════════════════════════════
 #
 # Use Case: Self-hosted PaaS via Coolify.
-# Coolify übernimmt Reverse Proxy + Let's Encrypt → Variant B (HTTP intern).
+# Variant C-Light: Coolify terminiert öffentliches TLS und re-encrypted intern
+# zu GlobaLeaks:8443 mit dessen self-signed Cert. GlobaLeaks kennt kein
+# X-Forwarded-Proto → Plain-HTTP-Forwarding erzeugt einen Redirect-Loop.
 #
 # Deployment:
 #   In Coolify: "Docker Compose" Resource anlegen, dieses File einfügen,
-#   Domain auf GLOBALEAKS_HOSTNAME setzen, Service-Port = 8080.
+#   Domain auf GLOBALEAKS_HOSTNAME setzen, Service-Port = 8443 (HTTPS!).
+#   In Coolify-UI: "Force HTTPS" aus (Coolify macht das bereits), UND
+#   "HTTPS Backend" / "insecure-skip-verify" aktivieren.
 #
 # WICHTIG nach erstem Start:
-#   - Admin → Network: "Behind reverse proxy: ON"
-#   - Admin → HTTPS: "Disable Let's Encrypt" (Coolify macht das)
+#   - Admin → HTTPS: Let's Encrypt DEAKTIVIEREN
 #   - Admin → Network → Tor: ON (falls gewünscht)
 #
 # ═══════════════════════════════════════════════════════════
@@ -37,15 +40,15 @@ services:
       - TZ=${TIME_ZONE:-Etc/UTC}
       # Coolify-Magic-Var: Service-URL auf der die App erreichbar ist.
       # Wird von Coolify automatisch in den eingebauten Proxy gemappt.
-      - SERVICE_FQDN_GLOBALEAKS_8080
+      - SERVICE_FQDN_GLOBALEAKS_8443
     volumes:
       - data:/var/globaleaks
     ports:
-      # Coolify routet via internem Proxy auf 8080 (HTTP).
-      # Format "8080" (ohne Host-Bindung) → nur intern erreichbar.
-      - "8080"
+      # HTTPS intern auf 8443 (GlobaLeaks self-signed).
+      # Coolify muss "insecure skip verify" zum Backend nutzen.
+      - "8443"
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8080/ || exit 1"]
+      test: ["CMD-SHELL", "curl -fksS -o /dev/null https://localhost:8443/ || exit 1"]
       interval: 30s
       timeout: 10s
       start_period: 60s

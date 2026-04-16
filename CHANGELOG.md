@@ -1,3 +1,9 @@
+## [0.5.2](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.1...v0.5.2) (2026-04-16)
+
+### 🐛 Bug Fixes
+
+* **branding:** corrected Tor banner selectors to actual Bootstrap classes ([e3d8314](https://github.com/bauer-group/COM-WhistleblowerApp/commit/e3d831499534f01a67e4a7afc008f93c8abb24d8))
+
 ## [0.5.1](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.0...v0.5.1) (2026-04-16)
 
 ### 🐛 Bug Fixes

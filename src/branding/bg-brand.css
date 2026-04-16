@@ -1,0 +1,137 @@
+/* ═══════════════════════════════════════════════════════════
+ * BAUER GROUP — Brand Override für GlobaLeaks
+ * Compliance Speak-Up Platform
+ *
+ * Wird geladen nach dem Upstream-styles.css, überschreibt per Cascade.
+ * Farb-/Font-Werte folgen der BG Corporate Identity:
+ *   - Farben: docs/de/farben/index.md
+ *   - Typografie: docs/de/typografie/index.md (System-Font-Stack)
+ * ═══════════════════════════════════════════════════════════ */
+
+/* ───────────────────────────────────────────────────────────
+ * Bootstrap-Variablen überschreiben
+ * GlobaLeaks nutzt Bootstrap 5; diese :root-Variablen wirken global.
+ * ─────────────────────────────────────────────────────────── */
+:root {
+  /* Primärfarbe: BAUER Orange (PMS 144 C) */
+  --bs-primary: #FF8500;
+  --bs-primary-rgb: 255, 133, 0;
+
+  /* Link-Farbe: Orange 700 — AA-konform auf Weiß (4.6:1 Kontrast) */
+  --bs-link-color: #C2570A;
+  --bs-link-color-rgb: 194, 87, 10;
+  --bs-link-hover-color: #9A4509;
+  --bs-link-hover-color-rgb: 154, 69, 9;
+
+  /* Text: Warm 900 (statt Bootstrap-Default-Schwarz, harmoniert mit Orange) */
+  --bs-body-color: #231F1C;
+  --bs-body-color-rgb: 35, 31, 28;
+
+  /* Sekundär-Text: Warm 700 */
+  --bs-secondary-color: rgba(82, 75, 69, 0.75);
+  --bs-tertiary-color: rgba(82, 75, 69, 0.5);
+
+  /* Fokus-Ring: Orange-transparent */
+  --bs-focus-ring-color: rgba(255, 133, 0, 0.35);
+}
+
+/* ───────────────────────────────────────────────────────────
+ * Typografie: System-Font-Stack (BG-Standard, keine externen Fonts)
+ * ─────────────────────────────────────────────────────────── */
+body,
+.btn,
+.form-control,
+.form-select,
+input,
+textarea,
+select,
+button {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family:
+    ui-monospace,
+    "SF Mono",
+    "Cascadia Code",
+    "Segoe UI Mono",
+    Consolas,
+    monospace;
+}
+
+/* ───────────────────────────────────────────────────────────
+ * Primary Buttons — BG-Orange mit AA-Hover
+ * ─────────────────────────────────────────────────────────── */
+.btn-primary {
+  background-color: #FF8500;
+  border-color: #FF8500;
+  color: #fff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:disabled,
+.btn-primary.disabled {
+  background-color: #C2570A;
+  border-color: #C2570A;
+  color: #fff;
+}
+
+.btn-primary:focus-visible {
+  box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
+}
+
+/* ───────────────────────────────────────────────────────────
+ * Headings — Warm Dark statt Bootstrap-Default-Blau
+ * ─────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #231F1C;
+  font-weight: 700;
+}
+
+/* ───────────────────────────────────────────────────────────
+ * Links — BG-Orange 700 (AA-konform)
+ * ─────────────────────────────────────────────────────────── */
+a {
+  color: var(--bs-link-color);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--bs-link-hover-color);
+}
+
+/* ───────────────────────────────────────────────────────────
+ * "Powered by GlobaLeaks"-Attribution entfernen
+ *
+ * Rechtlich: AGPL-3.0 verpflichtet zur Source-Code-Bereitstellung und
+ * zum Erhalt der Copyright-Notices in Source-Files — eine Attribution
+ * im Runtime-UI ist hingegen NICHT zwingend. Unsere AGPL-Compliance
+ * erfolgt via OCI-Image-Labels (image.base.name, image.licenses) und
+ * dem README-Verweis auf das Upstream-Projekt.
+ * ─────────────────────────────────────────────────────────── */
+a[href*="globaleaks.org"] {
+  display: none !important;
+}
+
+/* Parent-Absatz mit "Powered by"-Text ebenfalls verbergen (moderne Browser mit :has()-Support) */
+footer p:has(a[href*="globaleaks.org"]),
+footer div:has(> a[href*="globaleaks.org"]),
+footer *:has(> a[href*="globaleaks.org"]:only-child) {
+  display: none !important;
+}

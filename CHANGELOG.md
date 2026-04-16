@@ -1,3 +1,9 @@
+## [0.5.1](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.0...v0.5.1) (2026-04-16)
+
+### 🐛 Bug Fixes
+
+* **branding:** fixed button spacing and Tor privacy banner ([7223f83](https://github.com/bauer-group/COM-WhistleblowerApp/commit/7223f8313123b19f93d49424c2aba05bfc91f453)), closes [#FDF6](https://github.com/bauer-group/COM-WhistleblowerApp/issues/FDF6) [#C2570](https://github.com/bauer-group/COM-WhistleblowerApp/issues/C2570)
+
 ## [0.5.0](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.4.1...v0.5.0) (2026-04-16)
 
 ### 🚀 Features

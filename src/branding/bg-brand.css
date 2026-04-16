@@ -382,49 +382,60 @@ footer a:hover,
 /* ───────────────────────────────────────────────────────────
  * Tor-Hinweis-Banner entschärfen
  *
- * Default-Rendering (Bootstrap .bg-dark + .bg-warning-Badge) wirkt wie eine
- * Malware-Warnung. Ein Privacy-Hinweis soll informieren, nicht abschrecken.
- * Wir zähmen ihn zu warmem Creme mit dezenten Orange-Akzenten.
+ * GlobaLeaks-Component: <src-privacybadge>
+ * Verwendete Bootstrap-Klassen (verifiziert im Bundle):
+ *   - .bg-secondary    → Container-Background (dunkler Ton)
+ *   - .text-white       → Text-Farbe
+ *   - .text-bg-warning  → Warning-Badge (giftiges Gelb)
+ *   - .badge-warning-custom → Custom Warning-Klasse
+ *   - .btn-secondary.btn-sm → Download-Button
  *
- * Target: <div class="bg-dark ..."> Container die .onion- oder Tor-Links
- * enthalten (GlobaLeaks-spezifisches Privacy-Badge, kein anderes bg-dark-Element).
+ * Umfärbung: warmes Creme + Orange-Akzente — informiert statt schreckt ab.
  * ─────────────────────────────────────────────────────────── */
-.bg-dark:has(a[href*=".onion"]),
-.bg-dark:has(a[href*="torproject.org"]) {
-  background-color: #FDF6EC !important;      /* warmes Creme */
+
+/* Container: warmes Creme statt dunkel */
+src-privacybadge .bg-secondary {
+  background-color: #FDF6EC !important;
   color: #3A3430 !important;
   border-bottom: 1px solid rgba(255, 133, 0, 0.25);
 }
 
-.bg-dark:has(a[href*=".onion"]) a,
-.bg-dark:has(a[href*="torproject.org"]) a {
+/* Text: warm-dark statt weiß */
+src-privacybadge .text-white {
+  color: #3A3430 !important;
+}
+
+/* Links (.onion-Adresse): BG-Orange-700 */
+src-privacybadge a:not(.btn) {
   color: #C2570A !important;
 }
 
-.bg-dark:has(a[href*=".onion"]) a:hover,
-.bg-dark:has(a[href*="torproject.org"]) a:hover {
+src-privacybadge a:not(.btn):hover {
   color: #9A4509 !important;
 }
 
-/* "Warning"-Badge: statt giftiges Gelb → sanfter Orange-Tint */
-.bg-dark:has(a[href*=".onion"]) .bg-warning,
-.bg-dark:has(a[href*="torproject.org"]) .bg-warning {
+/* "Warning"-Badge: giftiges Gelb → sanfter Orange-Tint */
+src-privacybadge .text-bg-warning,
+src-privacybadge .badge-warning-custom,
+src-privacybadge .badge {
   background-color: rgba(255, 133, 0, 0.15) !important;
   color: #9A4509 !important;
   border: 1px solid rgba(255, 133, 0, 0.35);
 }
 
-/* "Download the Tor Browser"-Button auf dem Banner: weiß statt dunkel */
-.bg-dark:has(a[href*=".onion"]) .btn,
-.bg-dark:has(a[href*="torproject.org"]) .btn {
+/* Download-Tor-Button: weiß mit grauem Rand statt dunkel */
+src-privacybadge .btn,
+src-privacybadge .btn-secondary {
   background-color: #fff !important;
   border: 1px solid rgba(82, 75, 69, 0.3) !important;
   color: #3A3430 !important;
 }
 
-.bg-dark:has(a[href*=".onion"]) .btn:hover,
-.bg-dark:has(a[href*="torproject.org"]) .btn:hover {
-  background-color: #FDF6EC !important;
+src-privacybadge .btn:hover,
+src-privacybadge .btn-secondary:hover,
+src-privacybadge .btn:focus,
+src-privacybadge .btn-secondary:focus {
+  background-color: #fff !important;
   border-color: #FF8500 !important;
   color: #231F1C !important;
 }

@@ -1,3 +1,9 @@
+## [0.4.1](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.4.0...v0.4.1) (2026-04-16)
+
+### ♻️ Refactoring
+
+* **patches:** modularized patch architecture ([a2f7816](https://github.com/bauer-group/COM-WhistleblowerApp/commit/a2f78161f11fc61f2ed6377a0695bb86777c375d))
+
 ## [0.4.0](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.3.0...v0.4.0) (2026-04-16)
 
 ### 🚀 Features

@@ -13,11 +13,15 @@ Self-hosted, anonyme Meldeplattform für Compliance-Verstöße. Whistleblower k�
 - Optionaler Tor-Onion-Service für maximale Anonymität
 - Drei Deployment-Modi: Development, Traefik, Coolify
 
-## Architektur-Entscheidung: TLS-Terminierung
+## Architektur-Entscheidung: TLS-Terminierung + Image-Patch
 
-Wir nutzen **Variante B**: Traefik (bzw. Coolify-Proxy) terminiert TLS und leitet Klartext-HTTP intern an `globaleaks:8080` weiter.
+Der Reverse Proxy (Traefik bzw. Coolify) terminiert öffentliches TLS und leitet intern **Plain-HTTP** an `globaleaks:8080` weiter.
 
-> **Hinweis zur Compliance**: GlobaLeaks unterstützt eigentlich End-to-End-TLS via `:8443`. Variante B akzeptiert bewusst, dass im Docker-internen Netz Klartext fließt. Submissions selbst sind **client-seitig** (PGP) verschlüsselt — der Reverse Proxy sieht nur transportseitig Klartext. Das Risiko ist akzeptabel für ein Single-Host-Deployment ohne Mandantentrennung im Proxy-Netz.
+Damit das mit GlobaLeaks funktioniert, bauen wir ein eigenes, minimal abgeleitetes Image aus [`src/Dockerfile`](src/Dockerfile). Ein 2-Zeilen-Python-Patch (siehe [`src/apply-patches.py`](src/apply-patches.py)) lehrt GlobaLeaks den `X-Forwarded-Proto`-Header zu respektieren — ohne den würde jeder Request in einem Redirect-Loop enden, weil GlobaLeaks im Upstream-Zustand ausschließlich den physischen TLS-Socket prüft.
+
+**Sicherheit des Patches**: Der X-Forwarded-Proto-Header wird nur respektiert weil der Container ausschließlich im internen Proxy-Netz erreichbar ist und der Proxy den Header bei jedem Request überschreibt (client-seitige Werte werden verworfen). Bei direkter Exposition des Containers wäre der Patch unsicher — in unserem Deployment-Modell ist er es nicht.
+
+> **Hinweis zur Compliance**: Submissions sind client-seitig (PGP) verschlüsselt; der Proxy sieht nur Transport-Klartext. Für ein Single-Host-Deployment ohne Multi-Tenant-Proxy-Netz akzeptabel. Patch-Rationale wird in diesem README und in der Commit-History für Audits dokumentiert.
 
 ## Quick Start
 
@@ -49,11 +53,11 @@ Wir nutzen **Variante B**: Traefik (bzw. Coolify-Proxy) terminiert TLS und leite
    GLOBALEAKS_HOSTNAME=speakup.bauer-group.com
    ```
 
-4. Container starten:
+4. Container starten (bei Erstdeployment: mit `--build` um Image aus `src/` zu bauen):
 
    ```bash
    # Production hinter Traefik
-   docker compose -f docker-compose.traefik.yml up -d
+   docker compose -f docker-compose.traefik.yml up -d --build
    ```
 
 5. Erste Konfiguration: siehe [First-Boot Setup](#first-boot-setup).
@@ -62,12 +66,11 @@ Wir nutzen **Variante B**: Traefik (bzw. Coolify-Proxy) terminiert TLS und leite
 
 ### Development
 
-Direkter Port-Zugriff, GlobaLeaks terminiert HTTPS selbst (self-signed):
+Direkter Port-Zugriff, plain HTTP (Image wird lokal gebaut):
 
 ```bash
-docker compose -f docker-compose.development.yml up -d
-# → http://localhost:8080  (Wizard)
-# → https://localhost:8443 (Cert-Warnung erwartet)
+docker compose -f docker-compose.development.yml up -d --build
+# → http://localhost:8080  (Wizard + Plattform)
 ```
 
 ### Production (Traefik)
@@ -75,32 +78,33 @@ docker compose -f docker-compose.development.yml up -d
 TLS via Traefik + Let's Encrypt, Security-Headers, Rate-Limiting:
 
 ```bash
-docker compose -f docker-compose.traefik.yml up -d
+docker compose -f docker-compose.traefik.yml up -d --build
 # → https://speakup.bauer-group.com
 ```
 
 ### Production (Coolify)
 
-Coolify übernimmt Reverse Proxy & TLS automatisch:
+Coolify cloned das Git-Repo und baut das Image selbst:
 
-```bash
-# In Coolify: Docker-Compose-Resource anlegen, dieses File einfügen.
-docker compose -f docker-compose.coolify.yml up -d
-```
+- In Coolify: **Docker Compose**-Resource mit Git-URL auf dieses Repo anlegen
+- Compose-File: `docker-compose.coolify.yml` auswählen
+- Domain im Coolify-UI auf `GLOBALEAKS_HOSTNAME` setzen
+- Deploy klicken — Coolify baut aus `src/Dockerfile` und routet Port 8080
 
 ## First-Boot Setup
 
-Nach dem ersten Start ruft man die URL auf und durchläuft den Wizard. **Direkt danach** (Pflicht für Variant B):
+Nach dem ersten Start ruft man die URL auf und durchläuft den Wizard. Direkt danach:
 
 | Schritt | Pfad in Admin-UI | Wert |
 | --- | --- | --- |
-| 1 | Settings → Network → "Behind a reverse proxy" | **ON** |
-| 2 | Settings → HTTPS → "Let's Encrypt" | **OFF** (Traefik macht das) |
-| 3 | Settings → Network → "Tor" | **ON** falls gewünscht |
-| 4 | Notifications → SMTP | Konfigurieren für Empfänger-Alerts |
-| 5 | Users → Recipient | Compliance-Officer einrichten |
+| 1 | Settings → HTTPS → "Let's Encrypt" | **OFF** (Proxy macht das public TLS) |
+| 2 | Settings → Network → "Tor" | **ON** falls Onion Service gewünscht |
+| 3 | Notifications → SMTP | Konfigurieren für Empfänger-Alerts |
+| 4 | Users → Recipient | Compliance-Officer einrichten |
 
-> Ohne Schritt 1 generiert GlobaLeaks falsche Redirect-URLs. Ohne Schritt 2 versucht GlobaLeaks selbst Port 80/443 zu öffnen → Konflikt mit Traefik.
+> Ohne Schritt 1 versucht GlobaLeaks selbst Port 80/443 zu öffnen → Konflikt mit dem Reverse Proxy.
+>
+> **Kein "Behind reverse proxy"-Toggle mehr nötig** — unser Image-Patch regelt das X-Forwarded-Proto-Handling in GlobaLeaks direkt.
 
 ## Konfiguration
 
@@ -111,7 +115,7 @@ Nach dem ersten Start ruft man die URL auf und durchläuft den Wizard. **Direkt 
 | `STACK_NAME` | `speakup_bauer-group_com` | Container-Naming-Prefix |
 | `TIME_ZONE` | `Etc/UTC` | Container-Zeitzone |
 | `GLOBALEAKS_HOSTNAME` | `speakup.bauer-group.com` | Public Hostname |
-| `GLOBALEAKS_IMAGE` | `globaleaks/globaleaks:latest` | Image-Tag (Production: pinned digest) |
+| `GLOBALEAKS_BASE_VERSION` | `latest` | Upstream-Tag auf dem das lokale Image baut |
 | `PROXY_NETWORK` | `EDGEPROXY` | Traefik-Netzwerk |
 | `GLOBALEAKS_CPU_LIMIT` | `2.0` | CPU-Limit |
 | `GLOBALEAKS_MEM_LIMIT` | `1024M` | Memory-Limit |
@@ -148,21 +152,20 @@ docker exec -it speakup_bauer-group_com_SERVER gl-admin restore /tmp/globaleaks_
 ## Update-Strategie
 
 ```bash
-# Image aktualisieren (latest)
-docker compose -f docker-compose.traefik.yml pull
+# Upstream-Base-Image aktualisieren und Image neu bauen
+docker compose -f docker-compose.traefik.yml build --pull --no-cache
 docker compose -f docker-compose.traefik.yml up -d
 
-# DB-Migration läuft beim Start automatisch.
+# DB-Migration läuft beim GlobaLeaks-Start automatisch.
 # Vor jedem Update: Backup machen!
 ```
 
-Für reproduzierbare Production-Deployments den Image-Digest in `.env` pinnen:
+Der Patch-Applier ([`src/apply-patches.py`](src/apply-patches.py)) ist **fail-fast** — wenn Upstream die gepatchte Funktion strukturell ändert, bricht der Build. Dann den Patch-Kontext an die neue Upstream-Version anpassen (Such/Ersetz-Strings in der Datei).
+
+Für reproduzierbare Production-Deployments einen konkreten Upstream-Tag in `.env` pinnen:
 
 ```bash
-docker pull globaleaks/globaleaks:latest
-docker inspect globaleaks/globaleaks:latest --format='{{index .RepoDigests 0}}'
-# → globaleaks/globaleaks@sha256:abc123...
-# In .env: GLOBALEAKS_IMAGE=globaleaks/globaleaks@sha256:abc123...
+GLOBALEAKS_BASE_VERSION=5.0.89
 ```
 
 ## Architektur
@@ -219,7 +222,8 @@ docker inspect globaleaks/globaleaks:latest --format='{{index .RepoDigests 0}}'
 
 ### Bekannte Trade-offs
 
-- **Variant B (TLS bei Traefik)**: Klartext im Docker-Netz akzeptiert. Mitigation: Single-Host, kein Multi-Tenant im `EDGEPROXY`-Netz.
+- **TLS-Terminierung am Proxy**: Klartext im Docker-Netz akzeptiert. Mitigation: Single-Host, kein Multi-Tenant im `EDGEPROXY`-Netz.
+- **Image-Patch für `X-Forwarded-Proto`**: GlobaLeaks-Upstream akzeptiert diesen Header bewusst nicht. Unser Patch aktiviert ihn. Mitigation: Container nur im internen Proxy-Netz, Proxy überschreibt den Header bei jedem Request. Patch-Rationale in [`src/apply-patches.py`](src/apply-patches.py) dokumentiert.
 - **`:latest` Tag default**: Erleichtert Updates, schwächt Reproduzierbarkeit. Mitigation: In Production digest pinnen.
 - **Kein Auto-Backup**: Bewusste Entscheidung (geringe Meldefrequenz). Manuelle/cron-basierte Backups dokumentiert.
 
@@ -234,7 +238,7 @@ docker exec -it speakup_bauer-group_com_SERVER gl-admin status
 
 ### "Falsche Redirect-URL nach Login"
 
-→ Schritt 1 des First-Boot Setups vergessen ("Behind reverse proxy: ON").
+→ Falsches Image gestartet (upstream statt gepatched). `docker compose ... up -d --build` mit `--build`-Flag ausführen und sicherstellen dass `src/apply-patches.py` beim Build erfolgreich durchläuft (`✓ trust-xforwarded-proto: applied`).
 
 ### "Cert-Loop / GlobaLeaks versucht ACME"
 

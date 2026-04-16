@@ -4,38 +4,24 @@
 # ═══════════════════════════════════════════════════════════
 #
 # Use Case: Self-hosted PaaS via Coolify.
-# Variant C-Light: Coolify terminiert öffentliches TLS, re-encrypted intern
-# via HTTPS zu GlobaLeaks:8443 (self-signed). GlobaLeaks kennt kein
-# X-Forwarded-Proto → Plain-HTTP-Forwarding erzeugt Redirect-Loop.
-#
-# Port-Idiom:
-#   - `expose:` statt `ports:` — kein Host-Mapping, nur Container-interner Port.
-#     Coolify sieht den exposed Port und setzt SERVICE_FQDN_GLOBALEAKS_8443
-#     automatisch für sein Domain-Routing.
-#
-# HTTPS-Backend:
-#   - Traefik-Labels unten weisen Coolifys Proxy an, intern HTTPS zu sprechen
-#     und das self-signed Cert zu akzeptieren (insecureSkipVerify).
+# Image wird aus src/ gebaut (Coolify cloned Git-Repo, baut bei Deploy).
+# Patch lehrt GlobaLeaks X-Forwarded-Proto zu respektieren → Coolifys
+# Default-Routing (HTTP zu Backend) funktioniert ohne Zusatz-Labels.
 #
 # Deployment:
-#   In Coolify: "Docker Compose" Resource anlegen, dieses File einfügen,
-#   Domain im UI auf GLOBALEAKS_HOSTNAME setzen, deployen.
-#
-# WICHTIG nach erstem Start:
-#   - Admin → HTTPS: Let's Encrypt DEAKTIVIEREN (Coolify macht public-TLS;
-#     GlobaLeaks nutzt intern nur noch self-signed)
-#   - Admin → Network → Tor: ON (falls Onion-Service gewünscht)
+#   In Coolify als "Docker Compose" Resource mit Git-Quelle anlegen.
+#   Coolify baut das Image selbst aus src/Dockerfile.
 #
 # ═══════════════════════════════════════════════════════════
 
 name: globaleaks-coolify
 
 services:
-  # ═══════════════════════════════════════════════════════════
-  # GlobaLeaks - Whistleblowing Platform
-  # ═══════════════════════════════════════════════════════════
   globaleaks:
-    image: ${GLOBALEAKS_IMAGE:-globaleaks/globaleaks:latest}
+    build:
+      context: ./src
+      args:
+        BASE_VERSION: ${GLOBALEAKS_BASE_VERSION:-latest}
     platform: linux/amd64
     container_name: GLOBALEAKS_SERVER
     restart: unless-stopped
@@ -49,27 +35,19 @@ services:
     volumes:
       - data:/var/globaleaks
     expose:
-      - "8443"
+      - "8080"
     healthcheck:
-      test: ["CMD-SHELL", "curl -fksS -o /dev/null https://localhost:8443/ || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8080/ || exit 1"]
       interval: 30s
       timeout: 10s
       start_period: 60s
       retries: 3
-    labels:
-      # HTTPS-Backend-Terminierung mit self-signed Cert-Akzeptanz.
-      # Coolifys Traefik spricht intern HTTPS zu GlobaLeaks:8443 — Pflicht,
-      # weil GlobaLeaks sonst in Redirect-Loop läuft (kein X-Forwarded-Proto).
-      - traefik.http.services.globaleaks.loadbalancer.server.scheme=https
-      - traefik.http.services.globaleaks.loadbalancer.serversTransport=globaleaks-insecure@docker
-      - traefik.http.serversTransports.globaleaks-insecure.insecureSkipVerify=true
     logging:
       driver: json-file
       options:
         max-size: "50m"
         max-file: "3"
 
-### Volumes ###
 volumes:
   data:
     driver: local

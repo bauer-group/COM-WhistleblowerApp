@@ -149,6 +149,8 @@ a:focus {
   padding: 0.7rem 1.75rem;
   font-size: 1rem;
   letter-spacing: 0.01em;
+  /* Vertikales Atmen — verhindert dass CTA-Buttons an Fließtext kleben */
+  margin-block: 0.75rem;
 }
 
 .btn-primary:hover,
@@ -369,6 +371,56 @@ footer a:hover,
 ::selection {
   background-color: rgba(255, 133, 0, 0.25);
   color: #231F1C;
+}
+
+/* ───────────────────────────────────────────────────────────
+ * Tor-Hinweis-Banner entschärfen
+ *
+ * Default-Rendering (Bootstrap .bg-dark + .bg-warning-Badge) wirkt wie eine
+ * Malware-Warnung. Ein Privacy-Hinweis soll informieren, nicht abschrecken.
+ * Wir zähmen ihn zu warmem Creme mit dezenten Orange-Akzenten.
+ *
+ * Target: <div class="bg-dark ..."> Container die .onion- oder Tor-Links
+ * enthalten (GlobaLeaks-spezifisches Privacy-Badge, kein anderes bg-dark-Element).
+ * ─────────────────────────────────────────────────────────── */
+.bg-dark:has(a[href*=".onion"]),
+.bg-dark:has(a[href*="torproject.org"]) {
+  background-color: #FDF6EC !important;      /* warmes Creme */
+  color: #3A3430 !important;
+  border-bottom: 1px solid rgba(255, 133, 0, 0.25);
+}
+
+.bg-dark:has(a[href*=".onion"]) a,
+.bg-dark:has(a[href*="torproject.org"]) a {
+  color: #C2570A !important;
+}
+
+.bg-dark:has(a[href*=".onion"]) a:hover,
+.bg-dark:has(a[href*="torproject.org"]) a:hover {
+  color: #9A4509 !important;
+}
+
+/* "Warning"-Badge: statt giftiges Gelb → sanfter Orange-Tint */
+.bg-dark:has(a[href*=".onion"]) .bg-warning,
+.bg-dark:has(a[href*="torproject.org"]) .bg-warning {
+  background-color: rgba(255, 133, 0, 0.15) !important;
+  color: #9A4509 !important;
+  border: 1px solid rgba(255, 133, 0, 0.35);
+}
+
+/* "Download the Tor Browser"-Button auf dem Banner: weiß statt dunkel */
+.bg-dark:has(a[href*=".onion"]) .btn,
+.bg-dark:has(a[href*="torproject.org"]) .btn {
+  background-color: #fff !important;
+  border: 1px solid rgba(82, 75, 69, 0.3) !important;
+  color: #3A3430 !important;
+}
+
+.bg-dark:has(a[href*=".onion"]) .btn:hover,
+.bg-dark:has(a[href*="torproject.org"]) .btn:hover {
+  background-color: #FDF6EC !important;
+  border-color: #FF8500 !important;
+  color: #231F1C !important;
 }
 
 /* ───────────────────────────────────────────────────────────

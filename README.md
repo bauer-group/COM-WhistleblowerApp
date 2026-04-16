@@ -8,16 +8,18 @@ Self-hosted, anonyme Meldeplattform für Compliance-Verstöße. Whistleblower k�
 
 **Features:**
 
-- Anonymes Melde-Frontend (mehrsprachig)
+- Anonymes Melde-Frontend (mehrsprachig, 80+ Sprachen via GlobaLeaks-i18n)
 - Verschlüsselter Datenaustausch zwischen Hinweisgeber & Empfänger
 - Optionaler Tor-Onion-Service für maximale Anonymität
+- BAUER-GROUP-Branding (Logo, Favicon, CI-Farben, entschärfter Tor-Hinweis)
+- Reverse-Proxy-kompatibles Image (patcht `X-Forwarded-Proto`-Handling)
 - Drei Deployment-Modi: Development, Traefik, Coolify
 
 ## Architektur-Entscheidung: TLS-Terminierung + Image-Patch
 
 Der Reverse Proxy (Traefik bzw. Coolify) terminiert öffentliches TLS und leitet intern **Plain-HTTP** an `globaleaks:8080` weiter.
 
-Damit das mit GlobaLeaks funktioniert, bauen wir ein eigenes, minimal abgeleitetes Image aus [`src/Dockerfile`](src/Dockerfile). Der Patcher ([`src/apply-patches.py`](src/apply-patches.py)) wählt abhängig vom Build-ARG `BEHIND_PROXY` ein passendes Patch-Set:
+Damit das mit GlobaLeaks funktioniert, bauen wir ein eigenes, minimal abgeleitetes Image aus [`src/Dockerfile`](src/Dockerfile). Der Patch-Runner ([`src/patches/runner.py`](src/patches/runner.py)) lädt alle Patch-Module aus [`src/patches/`](src/patches/) (Namensmuster `NNN_*.py`) und wendet sie abhängig vom Build-ARG `BEHIND_PROXY` an:
 
 | `BEHIND_PROXY` | Nutzung | Verhalten |
 | --- | --- | --- |
@@ -42,7 +44,7 @@ Damit das mit GlobaLeaks funktioniert, bauen wir ein eigenes, minimal abgeleitet
 
    ```bash
    git clone https://github.com/bauer-group/COM-WhistleblowerApp.git
-   cd Whistleblower-App
+   cd COM-WhistleblowerApp
    ```
 
 2. Environment-Datei anlegen:
@@ -165,7 +167,7 @@ docker compose -f docker-compose.traefik.yml up -d
 # Vor jedem Update: Backup machen!
 ```
 
-Der Patch-Applier ([`src/apply-patches.py`](src/apply-patches.py)) ist **fail-fast** — wenn Upstream die gepatchte Funktion strukturell ändert, bricht der Build. Dann den Patch-Kontext an die neue Upstream-Version anpassen (Such/Ersetz-Strings in der Datei).
+Der Patch-Runner ([`src/patches/runner.py`](src/patches/runner.py)) ist **fail-fast** — wenn Upstream eine gepatchte Funktion strukturell ändert, bricht der Build mit `CONTEXT-MISMATCH`. Dann in dem betroffenen Patch-Modul (`src/patches/NNN_*.py`) die `find`/`replace`-Strings an die neue Upstream-Version anpassen.
 
 Für reproduzierbare Production-Deployments einen konkreten Upstream-Tag in `.env` pinnen:
 
@@ -228,7 +230,7 @@ GLOBALEAKS_BASE_VERSION=5.0.89
 ### Bekannte Trade-offs
 
 - **TLS-Terminierung am Proxy**: Klartext im Docker-Netz akzeptiert. Mitigation: Single-Host, kein Multi-Tenant im `EDGEPROXY`-Netz.
-- **Image-Patch für `X-Forwarded-Proto`**: Zwei Stellen in GlobaLeaks gepatched — `should_redirect_https` (verhindert Redirect-Loop) und `set_headers` (stellt sicher dass HSTS und `Onion-Location` weiterhin gesetzt werden, obwohl der interne Request Plain-HTTP ist). Mitigation: Container nur im internen Proxy-Netz, Proxy überschreibt den Header bei jedem Request. Patch-Rationale in [`src/apply-patches.py`](src/apply-patches.py) dokumentiert.
+- **Image-Patch für `X-Forwarded-Proto`**: Zwei Stellen in GlobaLeaks gepatched — `should_redirect_https` (verhindert Redirect-Loop) und `set_headers` (stellt sicher dass HSTS und `Onion-Location` weiterhin gesetzt werden, obwohl der interne Request Plain-HTTP ist). Mitigation: Container nur im internen Proxy-Netz, Proxy überschreibt den Header bei jedem Request. Patch-Rationale in den jeweiligen Modulen [`src/patches/001_xfp_redirect.py`](src/patches/001_xfp_redirect.py) + [`002_xfp_set_headers.py`](src/patches/002_xfp_set_headers.py) dokumentiert.
 - **HSTS-Quelle hängt vom Deployment ab**: Traefik-Compose setzt HSTS zusätzlich via Middleware (doppelt gemoppelt, schadet nicht). Coolify setzt HSTS **nicht** automatisch — dort stellt ausschließlich unser Patch HSTS sicher. Daher ist Patch #2 (`set_headers`) für Coolify-Deployments **Pflicht**, nicht Luxus.
 - **`:latest` Tag default**: Erleichtert Updates, schwächt Reproduzierbarkeit. Mitigation: In Production digest pinnen.
 - **Kein Auto-Backup**: Bewusste Entscheidung (geringe Meldefrequenz). Manuelle/cron-basierte Backups dokumentiert.
@@ -244,7 +246,7 @@ docker exec -it speakup_bauer-group_com_SERVER gl-admin status
 
 ### "Falsche Redirect-URL nach Login"
 
-→ Falsches Image gestartet (upstream statt gepatched). `docker compose ... up -d --build` mit `--build`-Flag ausführen und sicherstellen dass `src/apply-patches.py` beim Build erfolgreich durchläuft (`✓ trust-xforwarded-proto: applied`).
+→ Falsches Image gestartet (upstream statt gepatched). `docker compose ... up -d --build` mit `--build`-Flag ausführen und im Build-Log sicherstellen dass alle Patches angewendet wurden (`✓ trust-xforwarded-proto-redirect: applied`, `✓ trust-xforwarded-proto-hsts-onion: applied`, etc., am Ende `Alle Patches OK.`).
 
 ### "Cert-Loop / GlobaLeaks versucht ACME"
 
@@ -263,9 +265,28 @@ docker exec -it speakup_bauer-group_com_SERVER cat /var/globaleaks/backend/tor/o
 - [HinSchG (Hinweisgeberschutzgesetz)](https://www.gesetze-im-internet.de/hinschg/)
 - [EU-Richtlinie 2019/1937](https://eur-lex.europa.eu/eli/dir/2019/1937/oj)
 
-## License
+## Branding
 
-MIT License — siehe [LICENSE](LICENSE).
+Das Image bringt BAUER-GROUP-Branding als Default mit — **kein Admin-Upload nötig** für frische Deployments. Quell-Assets in [`src/branding/`](src/branding/):
+
+| Asset | Quelle | Ziel im Image |
+| --- | --- | --- |
+| Favicon (multi-res .ico 16/32/48/64px) | `logo-square.png` | `/usr/share/globaleaks/client/images/favicon.ico` |
+| Default-Logo (.webp) | `logo-wide.png` | `/usr/share/globaleaks/client/images/logo.webp` |
+| Brand-CSS (Orange-CI, System-Fonts, entschärfter Tor-Hinweis) | `bg-brand.css` | `/usr/share/globaleaks/client/css/bg-brand.css` |
+
+Favicon und Logo werden beim Build über einen Multi-Stage-Builder (Python+Pillow) aus den PNG-Quellen generiert. Das Brand-CSS wird per Patch-Modul [`010_inject_brand_css.py`](src/patches/010_inject_brand_css.py) in die `index.html` eingebunden (Cache-Busting über `?v=N`-Querystring).
+
+Admin-Uploads via GlobaLeaks-UI (`Admin → Files`) **überschreiben** die Defaults — saisonales oder abweichendes Branding jederzeit ohne Rebuild möglich.
+
+## Lizenz
+
+| Artefakt | Lizenz |
+| --- | --- |
+| Glue-Code in diesem Repo (Dockerfile, Patches, CSS, Compose) | **MIT** — siehe [LICENSE](LICENSE) |
+| Gebautes Docker-Image | **AGPL-3.0-or-later** (abgeleitet von [GlobaLeaks](https://github.com/globaleaks/GlobaLeaks)) |
+
+Die AGPL-Pflicht zur Source-Code-Bereitstellung ist durch die öffentliche Verfügbarkeit dieses Repos (enthält Dockerfile + Patches) und den Upstream-GitHub-Link in den [OCI-Image-Labels](src/Dockerfile) (`org.opencontainers.image.source`, `org.opencontainers.image.base.name`) erfüllt.
 
 ---
 

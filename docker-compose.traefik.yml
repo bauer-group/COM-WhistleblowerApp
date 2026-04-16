@@ -21,6 +21,7 @@ services:
       context: ./src
       args:
         BASE_VERSION: ${GLOBALEAKS_BASE_VERSION:-latest}
+        BEHIND_PROXY: "true"
     platform: linux/amd64
     container_name: ${STACK_NAME:-globaleaks}_SERVER
     restart: unless-stopped

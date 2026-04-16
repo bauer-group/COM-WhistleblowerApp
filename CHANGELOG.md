@@ -1,3 +1,9 @@
+## [0.5.5](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.4...v0.5.5) (2026-04-16)
+
+### 🐛 Bug Fixes
+
+* **branding:** added spacing between CTA question and Report button ([8c06646](https://github.com/bauer-group/COM-WhistleblowerApp/commit/8c0664685b61d87c5876caf0213873b908d4df8e))
+
 ## [0.5.4](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.3...v0.5.4) (2026-04-16)
 
 ### 🐛 Bug Fixes

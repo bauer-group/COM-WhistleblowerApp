@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bauer-group/automation-templates/main/.github/config/docker-base-image-monitor/docker-base-images.schema.json",
+  "images": [
+    {
+      "name": "globaleaks",
+      "image": "globaleaks/globaleaks",
+      "tag": "latest",
+      "variable": "GLOBALEAKS_LATEST_DIGEST",
+      "description": "Upstream GlobaLeaks image (base for BAUER GROUP derivative)"
+    }
+  ],
+  "settings": {
+    "commit-prefix": "chore(deps)",
+    "auto-create-variables": true
+  }
+}

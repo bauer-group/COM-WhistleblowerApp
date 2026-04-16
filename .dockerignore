@@ -1,0 +1,57 @@
+# ═══════════════════════════════════════════════════════════
+# Whistleblower-App - Docker Build Ignore
+# BAUER GROUP | Compliance Reporting Platform
+# ═══════════════════════════════════════════════════════════
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment (may contain secrets)
+.env
+.env.*
+!.env.example
+
+# Documentation
+*.md
+LICENSE
+NOTICE
+CONCEPT.md
+
+# Docker Compose files (not needed in image)
+docker-compose*.yml
+
+# IDE
+.vscode/
+.idea/
+.claude/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Runtime data
+data/
+var/
+globaleaks-data/
+
+# Certificates
+certs/
+*.pem
+*.crt
+*.key
+
+# GitHub workflows (not needed in image)
+.github/

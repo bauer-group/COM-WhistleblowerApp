@@ -1,0 +1,60 @@
+# ═══════════════════════════════════════════════════════════
+# Whistleblower-App (GlobaLeaks) - Development
+# BAUER GROUP | Compliance Reporting Platform (HinSchG)
+# ═══════════════════════════════════════════════════════════
+#
+# Use Case: Lokale Entwicklung mit direktem Port-Zugriff.
+# GlobaLeaks terminiert HTTPS selbst (self-signed) auf 8443.
+#
+# Deployment:
+#   docker compose -f docker-compose.development.yml up -d
+#
+# Erreichbar:
+#   http://localhost:8080  (HTTP - First-Boot Wizard)
+#   https://localhost:8443 (HTTPS - self-signed Cert-Warnung erwartet)
+#
+# ═══════════════════════════════════════════════════════════
+
+name: globaleaks-development
+
+services:
+  # ═══════════════════════════════════════════════════════════
+  # GlobaLeaks - Whistleblowing Platform
+  # ═══════════════════════════════════════════════════════════
+  globaleaks:
+    image: ${GLOBALEAKS_IMAGE:-globaleaks/globaleaks:latest}
+    # GlobaLeaks-Image ist amd64-only (Tor + Twisted-Build-Constraints)
+    platform: linux/amd64
+    container_name: GLOBALEAKS_SERVER
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '${GLOBALEAKS_CPU_LIMIT:-2.0}'
+          memory: ${GLOBALEAKS_MEM_LIMIT:-1024M}
+    environment:
+      - TZ=${TIME_ZONE:-Etc/UTC}
+    volumes:
+      - data:/var/globaleaks
+    ports:
+      - "${GLOBALEAKS_HTTP_PORT:-8080}:8080/tcp"
+      - "${GLOBALEAKS_HTTPS_PORT:-8443}:8443/tcp"
+    healthcheck:
+      # GlobaLeaks hat keinen dedizierten /health Endpoint — / liefert 200 OK
+      # sobald Twisted die Routes geladen hat. Image bringt curl mit (kein wget).
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+### Volumes ###
+volumes:
+  data:
+    driver: local
+    name: globaleaks-data

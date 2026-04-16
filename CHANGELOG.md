@@ -1,3 +1,9 @@
+## [0.5.4](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.3...v0.5.4) (2026-04-16)
+
+### 🐛 Bug Fixes
+
+* **branding:** target #PrivacyBadge ID selector, hide Warning + text ([207a4eb](https://github.com/bauer-group/COM-WhistleblowerApp/commit/207a4eb662b9debe5e1172710439977d91039008)), closes [#1d1f24](https://github.com/bauer-group/COM-WhistleblowerApp/issues/1d1f24)
+
 ## [0.5.3](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.2...v0.5.3) (2026-04-16)
 
 ### 🐛 Bug Fixes

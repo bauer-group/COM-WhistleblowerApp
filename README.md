@@ -17,9 +17,14 @@ Self-hosted, anonyme Meldeplattform für Compliance-Verstöße. Whistleblower k�
 
 Der Reverse Proxy (Traefik bzw. Coolify) terminiert öffentliches TLS und leitet intern **Plain-HTTP** an `globaleaks:8080` weiter.
 
-Damit das mit GlobaLeaks funktioniert, bauen wir ein eigenes, minimal abgeleitetes Image aus [`src/Dockerfile`](src/Dockerfile). Ein 2-Zeilen-Python-Patch (siehe [`src/apply-patches.py`](src/apply-patches.py)) lehrt GlobaLeaks den `X-Forwarded-Proto`-Header zu respektieren — ohne den würde jeder Request in einem Redirect-Loop enden, weil GlobaLeaks im Upstream-Zustand ausschließlich den physischen TLS-Socket prüft.
+Damit das mit GlobaLeaks funktioniert, bauen wir ein eigenes, minimal abgeleitetes Image aus [`src/Dockerfile`](src/Dockerfile). Der Patcher ([`src/apply-patches.py`](src/apply-patches.py)) wählt abhängig vom Build-ARG `BEHIND_PROXY` ein passendes Patch-Set:
 
-**Sicherheit des Patches**: Der X-Forwarded-Proto-Header wird nur respektiert weil der Container ausschließlich im internen Proxy-Netz erreichbar ist und der Proxy den Header bei jedem Request überschreibt (client-seitige Werte werden verworfen). Bei direkter Exposition des Containers wäre der Patch unsicher — in unserem Deployment-Modell ist er es nicht.
+| `BEHIND_PROXY` | Nutzung | Verhalten |
+| --- | --- | --- |
+| `true` (Compose: traefik/coolify) | Production | GlobaLeaks respektiert `X-Forwarded-Proto` → kein Redirect-Loop, HSTS + Onion-Location werden gesetzt |
+| `false` (Compose: development) | Development | HTTPS-Redirect hart deaktiviert, **kein HSTS auf localhost** (verhindert Browser-Pollution mit preload=1-Jahr) |
+
+**Sicherheit des `X-Forwarded-Proto`-Trusts**: Der Header wird nur respektiert weil der Container ausschließlich im internen Proxy-Netz erreichbar ist und der Proxy den Header bei jedem Request überschreibt (client-seitige Werte werden verworfen). Bei direkter Exposition des Containers wäre der Patch unsicher — in unserem Deployment-Modell ist er es nicht.
 
 > **Hinweis zur Compliance**: Submissions sind client-seitig (PGP) verschlüsselt; der Proxy sieht nur Transport-Klartext. Für ein Single-Host-Deployment ohne Multi-Tenant-Proxy-Netz akzeptabel. Patch-Rationale wird in diesem README und in der Commit-History für Audits dokumentiert.
 
@@ -223,7 +228,8 @@ GLOBALEAKS_BASE_VERSION=5.0.89
 ### Bekannte Trade-offs
 
 - **TLS-Terminierung am Proxy**: Klartext im Docker-Netz akzeptiert. Mitigation: Single-Host, kein Multi-Tenant im `EDGEPROXY`-Netz.
-- **Image-Patch für `X-Forwarded-Proto`**: GlobaLeaks-Upstream akzeptiert diesen Header bewusst nicht. Unser Patch aktiviert ihn. Mitigation: Container nur im internen Proxy-Netz, Proxy überschreibt den Header bei jedem Request. Patch-Rationale in [`src/apply-patches.py`](src/apply-patches.py) dokumentiert.
+- **Image-Patch für `X-Forwarded-Proto`**: Zwei Stellen in GlobaLeaks gepatched — `should_redirect_https` (verhindert Redirect-Loop) und `set_headers` (stellt sicher dass HSTS und `Onion-Location` weiterhin gesetzt werden, obwohl der interne Request Plain-HTTP ist). Mitigation: Container nur im internen Proxy-Netz, Proxy überschreibt den Header bei jedem Request. Patch-Rationale in [`src/apply-patches.py`](src/apply-patches.py) dokumentiert.
+- **HSTS-Quelle hängt vom Deployment ab**: Traefik-Compose setzt HSTS zusätzlich via Middleware (doppelt gemoppelt, schadet nicht). Coolify setzt HSTS **nicht** automatisch — dort stellt ausschließlich unser Patch HSTS sicher. Daher ist Patch #2 (`set_headers`) für Coolify-Deployments **Pflicht**, nicht Luxus.
 - **`:latest` Tag default**: Erleichtert Updates, schwächt Reproduzierbarkeit. Mitigation: In Production digest pinnen.
 - **Kein Auto-Backup**: Bewusste Entscheidung (geringe Meldefrequenz). Manuelle/cron-basierte Backups dokumentiert.
 

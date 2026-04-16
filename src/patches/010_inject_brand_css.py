@@ -15,6 +15,12 @@
 
 APPLIES_WHEN = "always"
 
+# Cache-Busting: Query-Suffix bei jeder signifikanten bg-brand.css-Änderung
+# hochzählen, damit Browser/Tor-Browser die aktualisierte CSS nachladen und
+# nicht aus dem Disk-Cache ausliefern (keine Cache-Control-Header auf dem
+# Static-Path). Version folgt dem Build-State, nicht SemVer.
+CSS_CACHE_VERSION = "4"
+
 PATCHES = [
     {
         "name": "inject-bg-brand-css",
@@ -22,7 +28,7 @@ PATCHES = [
         "find": '<link rel="stylesheet" href="css/styles.css"></head>',
         "replace": (
             '<link rel="stylesheet" href="css/styles.css">'
-            '<link rel="stylesheet" href="css/bg-brand.css"></head>'
+            f'<link rel="stylesheet" href="css/bg-brand.css?v={CSS_CACHE_VERSION}"></head>'
         ),
     },
 ]

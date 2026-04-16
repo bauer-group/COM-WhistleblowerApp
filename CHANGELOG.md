@@ -1,3 +1,9 @@
+## [0.3.0](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.2.1...v0.3.0) (2026-04-16)
+
+### 🚀 Features
+
+* **image:** added custom GlobaLeaks image build ([cc34379](https://github.com/bauer-group/COM-WhistleblowerApp/commit/cc34379a4945a4bcd724bc5fe5bcd3abbffbf543))
+
 ## [0.2.1](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.2.0...v0.2.1) (2026-04-16)
 
 ### 🐛 Bug Fixes

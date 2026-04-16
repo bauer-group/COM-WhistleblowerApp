@@ -1,3 +1,9 @@
+## [0.4.0](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.3.0...v0.4.0) (2026-04-16)
+
+### 🚀 Features
+
+* **docker:** added conditional patching via BEHIND_PROXY arg ([5dfa884](https://github.com/bauer-group/COM-WhistleblowerApp/commit/5dfa884376196ea08e5c22b6646b71676a669e61))
+
 ## [0.3.0](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.2.1...v0.3.0) (2026-04-16)
 
 ### 🚀 Features

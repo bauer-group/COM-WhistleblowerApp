@@ -390,59 +390,62 @@ footer a:hover,
 /* ───────────────────────────────────────────────────────────
  * Tor-Hinweis-Banner entschärfen
  *
- * GlobaLeaks-Component: <src-privacybadge>
- * Verwendete Bootstrap-Klassen (verifiziert im Bundle):
- *   - .bg-secondary    → Container-Background (dunkler Ton)
- *   - .text-white       → Text-Farbe
- *   - .text-bg-warning  → Warning-Badge (giftiges Gelb)
- *   - .badge-warning-custom → Custom Warning-Klasse
- *   - .btn-secondary.btn-sm → Download-Button
+ * Upstream-CSS setzt: #PrivacyBadge { background-color: #1d1f24; color: #fff }
+ * Struktur (aus gerendertem DOM verifiziert):
+ *   <src-privacybadge>
+ *     <div id="PrivacyBadge">
+ *       <div id="PrivacyBadgeTextBox">
+ *         <span class="badge badge-warning-custom text-bg-warning">⚠ Warning</span>
+ *         <div><div id="PrivacyBadgeText">You are strongly advised ...</div></div>
+ *         <a class="btn btn-sm btn-secondary">Download the Tor Browser</a>
+ *         <div><span>Then, copy ...</span><span class="onion-address">...</span></div>
  *
- * Umfärbung: warmes Creme + Orange-Akzente — informiert statt schreckt ab.
+ * Strategie: Warning-Badge + Erklärungstext ausblenden (zu laut),
+ * Container in warmes Creme umfärben, Download-Button + .onion-Link lassen.
  * ─────────────────────────────────────────────────────────── */
 
-/* Container: warmes Creme statt dunkel */
-src-privacybadge .bg-secondary {
+/* Container: warmes Creme statt dunkles Blau-Schwarz */
+#PrivacyBadge {
   background-color: #FDF6EC !important;
   color: #3A3430 !important;
   border-bottom: 1px solid rgba(255, 133, 0, 0.25);
 }
 
-/* Text: warm-dark statt weiß */
-src-privacybadge .text-white {
-  color: #3A3430 !important;
+/* Warning-Badge ausblenden (informiert nicht, schreckt nur ab) */
+#PrivacyBadge .badge.badge-warning-custom,
+#PrivacyBadge .badge-warning-custom {
+  display: none !important;
 }
 
-/* Links (.onion-Adresse): BG-Orange-700 */
-src-privacybadge a:not(.btn) {
+/* "You are strongly advised ..."-Erklärungstext ausblenden
+ * Die .onion-Adresse + Download-Button bleiben sichtbar — das ist
+ * die eigentliche Handlungsaufforderung. */
+#PrivacyBadgeText {
+  display: none !important;
+}
+
+/* .onion-Adresse: BG-Orange-700, monospace für Lesbarkeit */
+#PrivacyBadge .onion-address,
+#PrivacyBadge a:not(.btn) {
   color: #C2570A !important;
 }
 
-src-privacybadge a:not(.btn):hover {
+#PrivacyBadge a:not(.btn):hover {
   color: #9A4509 !important;
-}
-
-/* "Warning"-Badge: giftiges Gelb → sanfter Orange-Tint */
-src-privacybadge .text-bg-warning,
-src-privacybadge .badge-warning-custom,
-src-privacybadge .badge {
-  background-color: rgba(255, 133, 0, 0.15) !important;
-  color: #9A4509 !important;
-  border: 1px solid rgba(255, 133, 0, 0.35);
 }
 
 /* Download-Tor-Button: weiß mit grauem Rand statt dunkel */
-src-privacybadge .btn,
-src-privacybadge .btn-secondary {
+#PrivacyBadge .btn,
+#PrivacyBadge .btn-secondary {
   background-color: #fff !important;
   border: 1px solid rgba(82, 75, 69, 0.3) !important;
   color: #3A3430 !important;
 }
 
-src-privacybadge .btn:hover,
-src-privacybadge .btn-secondary:hover,
-src-privacybadge .btn:focus,
-src-privacybadge .btn-secondary:focus {
+#PrivacyBadge .btn:hover,
+#PrivacyBadge .btn-secondary:hover,
+#PrivacyBadge .btn:focus,
+#PrivacyBadge .btn-secondary:focus {
   background-color: #fff !important;
   border-color: #FF8500 !important;
   color: #231F1C !important;

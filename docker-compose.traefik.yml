@@ -4,15 +4,18 @@
 # ═══════════════════════════════════════════════════════════
 #
 # Use Case: Production hinter Traefik mit Let's Encrypt.
-# Variant B: Traefik terminiert TLS, leitet HTTP an GlobaLeaks:8080 weiter.
+# Variant C-Light: Traefik terminiert öffentliches TLS und re-encrypted intern
+# zu GlobaLeaks:8443 mit dessen self-signed Cert. Grund: GlobaLeaks kennt
+# kein X-Forwarded-Proto und redirected jeden HTTP-Request auf HTTPS →
+# Plain-HTTP-Forwarding erzeugt einen endlosen Redirect-Loop.
 #
 # Deployment:
 #   docker compose -f docker-compose.traefik.yml up -d
 #
-# WICHTIG nach erstem Start (siehe .env.example "First-Boot Setup"):
-#   - Admin → Network: "Behind reverse proxy: ON"
-#   - Admin → HTTPS: "Disable Let's Encrypt" (Traefik macht das)
-#   - Admin → Network → Tor: ON (falls gewünscht)
+# WICHTIG nach erstem Start:
+#   - Admin → Network → Tor: ON (falls Onion-Service gewünscht)
+#   - Admin → HTTPS: Let's Encrypt DEAKTIVIEREN (Traefik macht public-TLS;
+#     GlobaLeaks nutzt intern nur noch self-signed auf 8443)
 #
 # ═══════════════════════════════════════════════════════════
 
@@ -37,9 +40,10 @@ services:
     volumes:
       - data:/var/globaleaks
     expose:
-      - "8080"
+      - "8443"
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8080/ || exit 1"]
+      # Interner HTTPS-Check (self-signed → -k akzeptiert GlobaLeaks eigenes Cert)
+      test: ["CMD-SHELL", "curl -fksS -o /dev/null https://localhost:8443/ || exit 1"]
       interval: 30s
       timeout: 10s
       start_period: 60s
@@ -63,8 +67,15 @@ services:
       - traefik.http.routers.${STACK_NAME:-globaleaks}-https.tls.certresolver=letsencrypt
       - traefik.http.routers.${STACK_NAME:-globaleaks}-https.middlewares=${STACK_NAME:-globaleaks}-headers,${STACK_NAME:-globaleaks}-ratelimit
 
-      # Service: Plain HTTP intern auf 8080
-      - traefik.http.services.${STACK_NAME:-globaleaks}.loadbalancer.server.port=8080
+      # Service: HTTPS intern auf 8443 (Re-Encryption — GlobaLeaks kennt kein
+      # X-Forwarded-Proto, würde bei HTTP-Forward endlos auf HTTPS redirecten).
+      # GlobaLeaks nutzt self-signed Cert → Traefik muss cert-Prüfung überspringen.
+      - traefik.http.services.${STACK_NAME:-globaleaks}.loadbalancer.server.port=8443
+      - traefik.http.services.${STACK_NAME:-globaleaks}.loadbalancer.server.scheme=https
+      - traefik.http.services.${STACK_NAME:-globaleaks}.loadbalancer.serversTransport=${STACK_NAME:-globaleaks}-selfsigned@docker
+
+      # ServersTransport: akzeptiert GlobaLeaks self-signed Cert im internen Docker-Netz
+      - traefik.http.serversTransports.${STACK_NAME:-globaleaks}-selfsigned.insecureSkipVerify=true
 
       # Security Headers (Compliance/Privacy-relevant)
       # HSTS, kein Referer-Leak, kein Framing (Clickjacking), kein MIME-Sniffing

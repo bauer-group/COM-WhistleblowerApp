@@ -19,7 +19,7 @@ APPLIES_WHEN = "always"
 # hochzählen, damit Browser/Tor-Browser die aktualisierte CSS nachladen und
 # nicht aus dem Disk-Cache ausliefern (keine Cache-Control-Header auf dem
 # Static-Path). Version folgt dem Build-State, nicht SemVer.
-CSS_CACHE_VERSION = "4"
+CSS_CACHE_VERSION = "5"
 
 PATCHES = [
     {

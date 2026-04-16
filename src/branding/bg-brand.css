@@ -153,10 +153,16 @@ a:focus {
   margin-block: 0.75rem;
 }
 
-/* Override: in .input-group (Access-Code etc.) KEIN margin,
- * sonst bricht der Button aus der Bootstrap-Group aus. */
+/* Override: in Layout-Containern (row/col/flex) übernimmt der Parent
+ * das Spacing — Button darf dort kein eigenes margin haben, sonst
+ * bricht er aus der Zeile aus. GlobaLeaks nutzt KEIN .input-group,
+ * stattdessen col-/d-flex-basierte Layouts. */
+.row .btn,
+.col .btn,
+[class*="col-"] .btn,
+.d-flex .btn,
 .input-group .btn,
-.input-group .btn-primary {
+.btn-group .btn {
   margin-block: 0 !important;
 }
 
@@ -171,9 +177,11 @@ a:focus {
 
 .btn-primary:disabled,
 .btn-primary.disabled {
-  background-color: rgba(255, 133, 0, 0.55);
-  border-color: rgba(255, 133, 0, 0.55);
+  background-color: #FFCB94;      /* Soft Orange — erkennbar disabled, kein "broken"-Look */
+  border-color: #FFCB94;
   color: #fff;
+  opacity: 1;                     /* Überschreibt Bootstrap's default 0.65 — sonst doppelt blass */
+  cursor: not-allowed;
 }
 
 /* Secondary-Buttons (z.B. "Log in") im zurückhaltenden Warm-Gray */

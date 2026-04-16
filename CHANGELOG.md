@@ -1,3 +1,9 @@
+## [0.2.1](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.2.0...v0.2.1) (2026-04-16)
+
+### 🐛 Bug Fixes
+
+* **coolify:** added Traefik HTTPS backend labels ([c7033dd](https://github.com/bauer-group/COM-WhistleblowerApp/commit/c7033dd9bdf6b123d7ece69b9338de957189558b))
+
 ## [0.2.0](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.1.0...v0.2.0) (2026-04-16)
 
 ### 🚀 Features

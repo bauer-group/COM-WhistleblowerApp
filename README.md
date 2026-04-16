@@ -41,7 +41,7 @@ Damit das mit GlobaLeaks funktioniert, bauen wir ein eigenes, minimal abgeleitet
 1. Repository klonen:
 
    ```bash
-   git clone https://github.com/bauer-group/Whistleblower-App.git
+   git clone https://github.com/bauer-group/COM-WhistleblowerApp.git
    cd Whistleblower-App
    ```
 

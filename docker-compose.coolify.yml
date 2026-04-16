@@ -4,19 +4,27 @@
 # ═══════════════════════════════════════════════════════════
 #
 # Use Case: Self-hosted PaaS via Coolify.
-# Variant C-Light: Coolify terminiert öffentliches TLS und re-encrypted intern
-# zu GlobaLeaks:8443 mit dessen self-signed Cert. GlobaLeaks kennt kein
-# X-Forwarded-Proto → Plain-HTTP-Forwarding erzeugt einen Redirect-Loop.
+# Variant C-Light: Coolify terminiert öffentliches TLS, re-encrypted intern
+# via HTTPS zu GlobaLeaks:8443 (self-signed). GlobaLeaks kennt kein
+# X-Forwarded-Proto → Plain-HTTP-Forwarding erzeugt Redirect-Loop.
+#
+# Port-Idiom:
+#   - `expose:` statt `ports:` — kein Host-Mapping, nur Container-interner Port.
+#     Coolify sieht den exposed Port und setzt SERVICE_FQDN_GLOBALEAKS_8443
+#     automatisch für sein Domain-Routing.
+#
+# HTTPS-Backend:
+#   - Traefik-Labels unten weisen Coolifys Proxy an, intern HTTPS zu sprechen
+#     und das self-signed Cert zu akzeptieren (insecureSkipVerify).
 #
 # Deployment:
 #   In Coolify: "Docker Compose" Resource anlegen, dieses File einfügen,
-#   Domain auf GLOBALEAKS_HOSTNAME setzen, Service-Port = 8443 (HTTPS!).
-#   In Coolify-UI: "Force HTTPS" aus (Coolify macht das bereits), UND
-#   "HTTPS Backend" / "insecure-skip-verify" aktivieren.
+#   Domain im UI auf GLOBALEAKS_HOSTNAME setzen, deployen.
 #
 # WICHTIG nach erstem Start:
-#   - Admin → HTTPS: Let's Encrypt DEAKTIVIEREN
-#   - Admin → Network → Tor: ON (falls gewünscht)
+#   - Admin → HTTPS: Let's Encrypt DEAKTIVIEREN (Coolify macht public-TLS;
+#     GlobaLeaks nutzt intern nur noch self-signed)
+#   - Admin → Network → Tor: ON (falls Onion-Service gewünscht)
 #
 # ═══════════════════════════════════════════════════════════
 
@@ -38,14 +46,9 @@ services:
           memory: ${GLOBALEAKS_MEM_LIMIT:-1024M}
     environment:
       - TZ=${TIME_ZONE:-Etc/UTC}
-      # Coolify-Magic-Var: Service-URL auf der die App erreichbar ist.
-      # Wird von Coolify automatisch in den eingebauten Proxy gemappt.
-      - SERVICE_FQDN_GLOBALEAKS_8443
     volumes:
       - data:/var/globaleaks
-    ports:
-      # HTTPS intern auf 8443 (GlobaLeaks self-signed).
-      # Coolify muss "insecure skip verify" zum Backend nutzen.
+    expose:
       - "8443"
     healthcheck:
       test: ["CMD-SHELL", "curl -fksS -o /dev/null https://localhost:8443/ || exit 1"]
@@ -53,6 +56,13 @@ services:
       timeout: 10s
       start_period: 60s
       retries: 3
+    labels:
+      # HTTPS-Backend-Terminierung mit self-signed Cert-Akzeptanz.
+      # Coolifys Traefik spricht intern HTTPS zu GlobaLeaks:8443 — Pflicht,
+      # weil GlobaLeaks sonst in Redirect-Loop läuft (kein X-Forwarded-Proto).
+      - traefik.http.services.globaleaks.loadbalancer.server.scheme=https
+      - traefik.http.services.globaleaks.loadbalancer.serversTransport=globaleaks-insecure@docker
+      - traefik.http.serversTransports.globaleaks-insecure.insecureSkipVerify=true
     logging:
       driver: json-file
       options:

@@ -25,7 +25,7 @@ Wir nutzen **Variante B**: Traefik (bzw. Coolify-Proxy) terminiert TLS und leite
 
 - Docker & Docker Compose
 - Production: Traefik mit Let's Encrypt, oder Coolify
-- DNS: A-Record für `compliance.app.bauer-group.com` auf den Host
+- DNS: A-Record für `speakup.bauer-group.com` auf den Host
 
 ### Installation
 
@@ -45,8 +45,8 @@ Wir nutzen **Variante B**: Traefik (bzw. Coolify-Proxy) terminiert TLS und leite
 3. `.env` anpassen:
 
    ```bash
-   STACK_NAME=compliance_app_bauer-group_com
-   GLOBALEAKS_HOSTNAME=compliance.app.bauer-group.com
+   STACK_NAME=speakup_bauer-group_com
+   GLOBALEAKS_HOSTNAME=speakup.bauer-group.com
    ```
 
 4. Container starten:
@@ -76,7 +76,7 @@ TLS via Traefik + Let's Encrypt, Security-Headers, Rate-Limiting:
 
 ```bash
 docker compose -f docker-compose.traefik.yml up -d
-# → https://compliance.app.bauer-group.com
+# → https://speakup.bauer-group.com
 ```
 
 ### Production (Coolify)
@@ -93,7 +93,7 @@ docker compose -f docker-compose.coolify.yml up -d
 Nach dem ersten Start ruft man die URL auf und durchläuft den Wizard. **Direkt danach** (Pflicht für Variant B):
 
 | Schritt | Pfad in Admin-UI | Wert |
-|---|---|---|
+| --- | --- | --- |
 | 1 | Settings → Network → "Behind a reverse proxy" | **ON** |
 | 2 | Settings → HTTPS → "Let's Encrypt" | **OFF** (Traefik macht das) |
 | 3 | Settings → Network → "Tor" | **ON** falls gewünscht |
@@ -107,12 +107,11 @@ Nach dem ersten Start ruft man die URL auf und durchläuft den Wizard. **Direkt 
 ### Environment-Variablen
 
 | Variable | Default | Beschreibung |
-|---|---|---|
-| `STACK_NAME` | `compliance_app_bauer-group_com` | Container-Naming-Prefix |
+| --- | --- | --- |
+| `STACK_NAME` | `speakup_bauer-group_com` | Container-Naming-Prefix |
 | `TIME_ZONE` | `Etc/UTC` | Container-Zeitzone |
-| `GLOBALEAKS_HOSTNAME` | `compliance.app.bauer-group.com` | Public Hostname |
+| `GLOBALEAKS_HOSTNAME` | `speakup.bauer-group.com` | Public Hostname |
 | `GLOBALEAKS_IMAGE` | `globaleaks/globaleaks:latest` | Image-Tag (Production: pinned digest) |
-| `ENABLE_TOR` | `true` | Doku-Flag — toggle in Admin-UI |
 | `PROXY_NETWORK` | `EDGEPROXY` | Traefik-Netzwerk |
 | `GLOBALEAKS_CPU_LIMIT` | `2.0` | CPU-Limit |
 | `GLOBALEAKS_MEM_LIMIT` | `1024M` | Memory-Limit |
@@ -120,7 +119,7 @@ Nach dem ersten Start ruft man die URL auf und durchläuft den Wizard. **Direkt 
 ### Firewall (Production)
 
 | Port | Protokoll | Service |
-|---|---|---|
+| --- | --- | --- |
 | 80 | TCP | HTTP → Redirect via Traefik |
 | 443 | TCP | HTTPS via Traefik |
 
@@ -133,15 +132,15 @@ GlobaLeaks bringt ein eigenes Backup-Tool (`gl-admin`) das DB-Konsistenz garanti
 ### Backup
 
 ```bash
-docker exec -it compliance_app_bauer-group_com_SERVER gl-admin backup
-docker cp compliance_app_bauer-group_com_SERVER:/tmp/globaleaks_backup_$(date +%Y_%m_%d).tar.gz ./
+docker exec -it speakup_bauer-group_com_SERVER gl-admin backup
+docker cp speakup_bauer-group_com_SERVER:/tmp/globaleaks_backup_$(date +%Y_%m_%d).tar.gz ./
 ```
 
 ### Restore
 
 ```bash
-docker cp ./globaleaks_backup_YY_MM_DD.tar.gz compliance_app_bauer-group_com_SERVER:/tmp/
-docker exec -it compliance_app_bauer-group_com_SERVER gl-admin restore /tmp/globaleaks_backup_YY_MM_DD.tar.gz
+docker cp ./globaleaks_backup_YY_MM_DD.tar.gz speakup_bauer-group_com_SERVER:/tmp/
+docker exec -it speakup_bauer-group_com_SERVER gl-admin restore /tmp/globaleaks_backup_YY_MM_DD.tar.gz
 ```
 
 > **Empfehlung**: Backup-Aufruf in den vorhandenen BAUER-GROUP-Backup-Job (n8n / cron auf dem Host) einhängen — siehe Container-Solution Backup-Strategie.
@@ -168,7 +167,7 @@ docker inspect globaleaks/globaleaks:latest --format='{{index .RepoDigests 0}}'
 
 ## Architektur
 
-```
+```text
                     ┌──────────────────────────────────┐
                     │           INTERNET               │
                     └──────────────┬───────────────────┘
@@ -204,7 +203,7 @@ docker inspect globaleaks/globaleaks:latest --format='{{index .RepoDigests 0}}'
 ### HinSchG-Mapping
 
 | Anforderung (HinSchG § 16/17) | Umsetzung |
-|---|---|
+| --- | --- |
 | Vertrauliche Bearbeitung | TLS extern, Submissions PGP-verschlüsselt |
 | Anonyme Meldekanäle | Tor Onion Service + anonymer Web-Zugang |
 | Zugriff nur für berechtigte Personen | GlobaLeaks Recipient-Rollen |
@@ -229,8 +228,8 @@ docker inspect globaleaks/globaleaks:latest --format='{{index .RepoDigests 0}}'
 ### "Wizard nicht erreichbar"
 
 ```bash
-docker logs compliance_app_bauer-group_com_SERVER -f
-docker exec -it compliance_app_bauer-group_com_SERVER gl-admin status
+docker logs speakup_bauer-group_com_SERVER -f
+docker exec -it speakup_bauer-group_com_SERVER gl-admin status
 ```
 
 ### "Falsche Redirect-URL nach Login"
@@ -244,7 +243,7 @@ docker exec -it compliance_app_bauer-group_com_SERVER gl-admin status
 ### "Tor .onion nicht erreichbar"
 
 ```bash
-docker exec -it compliance_app_bauer-group_com_SERVER cat /var/globaleaks/backend/tor/onion_service/hostname
+docker exec -it speakup_bauer-group_com_SERVER cat /var/globaleaks/backend/tor/onion_service/hostname
 ```
 
 ## Dokumentation

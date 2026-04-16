@@ -149,8 +149,15 @@ a:focus {
   padding: 0.7rem 1.75rem;
   font-size: 1rem;
   letter-spacing: 0.01em;
-  /* Vertikales Atmen — verhindert dass CTA-Buttons an Fließtext kleben */
+  /* Vertikales Atmen — CTA-Buttons kleben nicht an Fließtext */
   margin-block: 0.75rem;
+}
+
+/* Override: in .input-group (Access-Code etc.) KEIN margin,
+ * sonst bricht der Button aus der Bootstrap-Group aus. */
+.input-group .btn,
+.input-group .btn-primary {
+  margin-block: 0 !important;
 }
 
 .btn-primary:hover,
@@ -338,18 +345,17 @@ footer a:hover,
 }
 
 /* ───────────────────────────────────────────────────────────
- * Login-Bereich (Access-Code-Eingabe) — als Card abgegrenzt
+ * Input-Group — Bootstrap-Layout für Access-Code-Login etc.
+ * Input + Button müssen dicht aneinander, kein Spacing-Override.
  * ─────────────────────────────────────────────────────────── */
-.login-box,
-.access-form,
-[class*="login"] form {
-  max-width: 28rem;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #fff;
-  border: 1px solid var(--bs-border-color);
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 2px rgba(35, 31, 28, 0.03);
+.input-group > .form-control,
+.input-group > .form-select,
+.input-group > .btn {
+  margin: 0;
+}
+
+.input-group > .btn {
+  padding-inline: 1.25rem;
 }
 
 /* ───────────────────────────────────────────────────────────

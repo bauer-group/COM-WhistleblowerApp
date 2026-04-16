@@ -1,0 +1,104 @@
+# ═══════════════════════════════════════════════════════════
+# Whistleblower-App (GlobaLeaks) - Production (Traefik)
+# BAUER GROUP | Compliance Reporting Platform (HinSchG)
+# ═══════════════════════════════════════════════════════════
+#
+# Use Case: Production hinter Traefik mit Let's Encrypt.
+# Variant B: Traefik terminiert TLS, leitet HTTP an GlobaLeaks:8080 weiter.
+#
+# Deployment:
+#   docker compose -f docker-compose.traefik.yml up -d
+#
+# WICHTIG nach erstem Start (siehe .env.example "First-Boot Setup"):
+#   - Admin → Network: "Behind reverse proxy: ON"
+#   - Admin → HTTPS: "Disable Let's Encrypt" (Traefik macht das)
+#   - Admin → Network → Tor: ON (falls gewünscht)
+#
+# ═══════════════════════════════════════════════════════════
+
+name: globaleaks-traefik
+
+services:
+  # ═══════════════════════════════════════════════════════════
+  # GlobaLeaks - Whistleblowing Platform
+  # ═══════════════════════════════════════════════════════════
+  globaleaks:
+    image: ${GLOBALEAKS_IMAGE:-globaleaks/globaleaks:latest}
+    platform: linux/amd64
+    container_name: ${STACK_NAME:-globaleaks}_SERVER
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '${GLOBALEAKS_CPU_LIMIT:-2.0}'
+          memory: ${GLOBALEAKS_MEM_LIMIT:-1024M}
+    environment:
+      - TZ=${TIME_ZONE:-Etc/UTC}
+    volumes:
+      - data:/var/globaleaks
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    networks:
+      proxy:
+    labels:
+      # Traefik Enable
+      - traefik.enable=true
+      - traefik.docker.network=${PROXY_NETWORK:-EDGEPROXY}
+
+      # HTTP Router (Redirect to HTTPS)
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-http.rule=Host(`${GLOBALEAKS_HOSTNAME}`)
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-http.entrypoints=http
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-http.middlewares=https-redirect@file
+
+      # HTTPS Router
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-https.rule=Host(`${GLOBALEAKS_HOSTNAME}`)
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-https.entrypoints=https
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-https.tls=true
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-https.tls.certresolver=letsencrypt
+      - traefik.http.routers.${STACK_NAME:-globaleaks}-https.middlewares=${STACK_NAME:-globaleaks}-headers,${STACK_NAME:-globaleaks}-ratelimit
+
+      # Service: Plain HTTP intern auf 8080
+      - traefik.http.services.${STACK_NAME:-globaleaks}.loadbalancer.server.port=8080
+
+      # Security Headers (Compliance/Privacy-relevant)
+      # HSTS, kein Referer-Leak, kein Framing (Clickjacking), kein MIME-Sniffing
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.stsSeconds=63072000
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.stsIncludeSubdomains=true
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.stsPreload=true
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.forceSTSHeader=true
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.frameDeny=true
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.referrerPolicy=no-referrer
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-headers.headers.permissionsPolicy=geolocation=(),microphone=(),camera=()
+
+      # Rate Limiting (anti-DoS, Whistleblowing erzeugt geringes Volumen)
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-ratelimit.ratelimit.average=60
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-ratelimit.ratelimit.burst=30
+      - traefik.http.middlewares.${STACK_NAME:-globaleaks}-ratelimit.ratelimit.period=1m
+    logging:
+      driver: json-file
+      options:
+        # WICHTIG: Logs können HTTP-Pfade enthalten — bei GlobaLeaks aber keine
+        # PII (Submissions gehen via POST-Body, der nicht geloggt wird).
+        # Trotzdem konservativ rotieren.
+        max-size: "50m"
+        max-file: "3"
+
+### Volumes ###
+volumes:
+  data:
+    driver: local
+    name: ${STACK_NAME:-globaleaks}-data
+
+### Networks ###
+networks:
+  # Externes Traefik-Proxy-Netz (einziges Netz nötig — Single-Container-Stack)
+  proxy:
+    name: ${PROXY_NETWORK:-EDGEPROXY}
+    external: true

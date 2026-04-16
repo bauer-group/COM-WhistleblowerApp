@@ -1,0 +1,63 @@
+# ═══════════════════════════════════════════════════════════
+# Whistleblower-App (GlobaLeaks) - Coolify
+# BAUER GROUP | Compliance Reporting Platform (HinSchG)
+# ═══════════════════════════════════════════════════════════
+#
+# Use Case: Self-hosted PaaS via Coolify.
+# Coolify übernimmt Reverse Proxy + Let's Encrypt → Variant B (HTTP intern).
+#
+# Deployment:
+#   In Coolify: "Docker Compose" Resource anlegen, dieses File einfügen,
+#   Domain auf GLOBALEAKS_HOSTNAME setzen, Service-Port = 8080.
+#
+# WICHTIG nach erstem Start:
+#   - Admin → Network: "Behind reverse proxy: ON"
+#   - Admin → HTTPS: "Disable Let's Encrypt" (Coolify macht das)
+#   - Admin → Network → Tor: ON (falls gewünscht)
+#
+# ═══════════════════════════════════════════════════════════
+
+name: globaleaks-coolify
+
+services:
+  # ═══════════════════════════════════════════════════════════
+  # GlobaLeaks - Whistleblowing Platform
+  # ═══════════════════════════════════════════════════════════
+  globaleaks:
+    image: ${GLOBALEAKS_IMAGE:-globaleaks/globaleaks:latest}
+    platform: linux/amd64
+    container_name: GLOBALEAKS_SERVER
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '${GLOBALEAKS_CPU_LIMIT:-2.0}'
+          memory: ${GLOBALEAKS_MEM_LIMIT:-1024M}
+    environment:
+      - TZ=${TIME_ZONE:-Etc/UTC}
+      # Coolify-Magic-Var: Service-URL auf der die App erreichbar ist.
+      # Wird von Coolify automatisch in den eingebauten Proxy gemappt.
+      - SERVICE_FQDN_GLOBALEAKS_8080
+    volumes:
+      - data:/var/globaleaks
+    ports:
+      # Coolify routet via internem Proxy auf 8080 (HTTP).
+      # Format "8080" (ohne Host-Bindung) → nur intern erreichbar.
+      - "8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+### Volumes ###
+volumes:
+  data:
+    driver: local
+    name: globaleaks-data

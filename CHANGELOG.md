@@ -1,3 +1,9 @@
+## [0.5.7](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.6...v0.5.7) (2026-04-19)
+
+### 🐛 Bug Fixes
+
+* **patches:** guarded cert_check against bad PEM ([4c81819](https://github.com/bauer-group/COM-WhistleblowerApp/commit/4c81819198ff85ecea7365eb1d3ef667022b7b29))
+
 ## [0.5.6](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.5...v0.5.6) (2026-04-16)
 
 ## [0.5.5](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.4...v0.5.5) (2026-04-16)

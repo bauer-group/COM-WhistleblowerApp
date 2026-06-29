@@ -1,3 +1,5 @@
+## [0.5.13](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.12...v0.5.13) (2026-06-29)
+
 ## [0.5.12](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.11...v0.5.12) (2026-06-05)
 
 ## [0.5.11](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.10...v0.5.11) (2026-06-01)

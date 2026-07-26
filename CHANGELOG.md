@@ -1,3 +1,9 @@
+## [0.5.16](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.15...v0.5.16) (2026-07-26)
+
+### 🐛 Bug Fixes
+
+* **ci:** added the missing permissions block ([ba273ac](https://github.com/bauer-group/COM-WhistleblowerApp/commit/ba273ac726013a66b289392cd430261e5d3b3892))
+
 ## [0.5.15](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.14...v0.5.15) (2026-07-16)
 
 ## [0.5.14](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.13...v0.5.14) (2026-07-13)

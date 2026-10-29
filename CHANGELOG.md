@@ -1,3 +1,16 @@
+# Changelog
+
+All notable changes to this project are documented here. This file is maintained
+automatically by [semantic-release](https://github.com/semantic-release/semantic-release)
+on every release to `main`.
+
+## [0.5.17](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.16...v0.5.17) (2026-10-29)
+
+### 🔧 Maintenance
+
+* **ci:** removed issue AI summary workflow ([54506ac](https://github.com/bauer-group/COM-WhistleblowerApp/commit/54506ac7dc2ed564b7aa93a0ee77d979cceb5733)), references [bauer-group/automation-templates#105](https://github.com/bauer-group/automation-templates/issues/105)
+* **deps:** update base image globaleaks [skip ci] ([5f4e90a](https://github.com/bauer-group/COM-WhistleblowerApp/commit/5f4e90ae5e14578080cbb9f82a512cbb4c038089))
+
 ## [0.5.16](https://github.com/bauer-group/COM-WhistleblowerApp/compare/v0.5.15...v0.5.16) (2026-07-26)
 
 ### 🐛 Bug Fixes
